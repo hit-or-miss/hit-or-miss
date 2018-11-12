@@ -39,7 +39,8 @@ userSchema.statics.authenticateBasic = function (auth) {
 };
 
 userSchema.statics.authenticateToken = function (token) {
-  let parsedToken = jwt.verify(token, process.env.SECRET);
+  // let parsedToken = jwt.verify(token, process.env.SECRET);
+  let parsedToken = jwt.verify(token, 'process.env.SECRET');
   let query = { _id: parsedToken.id };
   return this.findOne(query)
     .then(user => {
@@ -58,7 +59,8 @@ userSchema.methods.generateToken = function () {
     id: this._id,
     capabilities: capabilities[this.role],
   };
-  return jwt.sign(tokenData, process.env.SECRET);
+  return jwt.sign(tokenData, 'process.env.SECRET');
+  // return jwt.sign(tokenData, process.env.SECRET);
 };
 
 const User = mongoose.model('User', userSchema);
