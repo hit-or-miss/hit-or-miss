@@ -3,7 +3,6 @@
 
 **Authors**: Team !ASYNC - Katherine Smith, George McCadden III, Emery Parks, Ryan Milton, David Chambers
 
-
 ## Overview
 Hit or Miss! a command-line "back-end only" version of the game battleship!
 
