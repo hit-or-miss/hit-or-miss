@@ -3,8 +3,8 @@ import express from 'express';
 
 // Load local middleware
 
-import userRouter from './api/user-router.js';
-import authRouter from './middleware/auth.js';
+import userRouter from './routes/user-route.js';
+import auth from './middleware/auth.js';
 import notFound from './middleware/404.js';
 import error from './middleware/error.js';
 
@@ -19,7 +19,7 @@ app.use(userRouter);
 
 //use local middleware
 app.use(notFound);
-app.use(authRouter);
+app.use(auth);
 app.use(error);
 
 let server;
@@ -27,7 +27,7 @@ let server;
 module.exports = {
   app,
   start: (port) => {
-    server = app.listen(port, () => console.log(`LAB-18 SERVER Listening on PORT: ${port}`));
+    server = app.listen(port, () => console.log(`HIT-OR-MISS SERVER Listening on PORT: ${port}`));
   },
   stop: () => {
     server.close(() => {

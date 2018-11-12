@@ -1,6 +1,4 @@
-// FIXME: location of user user file.
-
-import User from './user.js';
+import User from '../models/user-model.js';
 
 export default (capability) => {
   return (req, res, next) => {
