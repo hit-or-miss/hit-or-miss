@@ -5,7 +5,6 @@ const authRouter = express.Router();
 import User from '../models/user-model.js';
 import auth from '../middleware/auth.js';
 import error from '../middleware/error.js';
-
 authRouter.post('/signup', (req, res, next) => {
   User.create(req.body)
     .then((user) => {
