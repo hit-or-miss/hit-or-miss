@@ -11,17 +11,28 @@ To install this package on your local system:
 1. Clone the repository into your local system
 2. Launch ```npm i``` in the directory of the repository.
 
+## Documents
+* [change-log.md](./docs/change-log.md) - List of changes made to the project
+* [team-agreement.md](./docs/team-agreement.md) - Team !ASYNC's development agreement
+* [user-stories.md](./docs/user-stories.md) - User stories for the project.
+
 ## Architecture
-This project uses the following technologies:
+This project is built on the following technologies:
 * JavaScript
 * Node.js ```https://nodejs.org/en/```
+* MongoDB: 
 * express: ```npm i express```
 * dotenv: ```npm i dotenv```
+
+## Deployment
 * Heroku deployment: TBD
 * Live site: TBD
 
 ## Database SCHEMA
-Database Schema can be found in TBD
+Database Schemas can be found in the following files:
+* board-model.js - used to define tracking and primary player boards.
+* ship-model.js - used to define ships.
+* user-model.js - used to define users.
 
 ## File Structure
 ```
@@ -29,40 +40,8 @@ TBD
 
 ```
 
-## Change Log
-
-
-#### 10-08-2018
-* (TEAM) - Established basic concepts, Organization/Team Name, and project name.
-
-#### 10-09-2018
-* (KS/TEAM) - Established [user stories](user-stories.md).
-* (GM/TEAM) - Created Organization and [initial repo](https://github.com/hit-or-miss/midterm).
-
-#### 10-10-2018
-* (DC/TEAM) - Created the [team agreement/guidelines](team-agreement.md).
-
-#### 10-12-2018
-
-
-#### 11-13-2018
-
-
-
-#### 11-14-2018
-
-
-
-#### 11-15-2018
-
-
-
-#### 11-16-2018
-
-
-
-
 ## Credits, Collaborations, and Resources
+
 ### Team Organization
 * Image found through Google Images using the ``` labeled for noncommercial reuse with modification ``` filter.
 * [Battleship](http://archive.defense.gov/DODCMSShare/NewsStoryPhoto/2009-08/hrs_090730-N-XXXXX-001c.jpg).
