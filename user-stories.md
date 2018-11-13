@@ -1,6 +1,6 @@
 ***USER STORIES***
 
-— AS A USER —
+# AS A USER
 
 As a user, I want to be able to open this app via the command line.
 
@@ -16,20 +16,10 @@ As a user, I want to be able to play against the computer.
 
 As a user, I want my shots against the computer to persist.
 
-As a user, I want to be shown my score as I’m playing the game.
-
 As a user, I want to be told if I win or lose.
 
-Stretch Goals:
 
-As a user, I want to be able to play against another player.
-
-As a user, I want to see my ship locations on a grid.
-
-As a user, I want my score to persist.
-
-
-— AS THE DEVELOPER —
+# AS THE DEVELOPER
 
 As the developer, I want to create an app that works on the command line.
 
@@ -45,7 +35,20 @@ As the developer, I want to save shot locations in a Mongo database.
 
 As the developer, I want to display whether the user won or lost on the command line.
 
-Stretch Goals: 
+
+***Stretch Goal User Stories***
+
+As a user, I want to be given the option to read instructions based on what I'm doing in the game - setting up or playing.
+
+As a user, I want access to the instructions at all times during the game.
+
+As a user, I want to be able to play against another player.
+
+As a user, I want to see my ship locations on a grid.
+
+As a user, I want to be shown my score as I’m playing the game.
+
+As a user, I want my score to persist.
 
 As the developer, I want to allow for two players to play against each other.
 
