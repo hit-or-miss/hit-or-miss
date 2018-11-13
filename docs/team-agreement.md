@@ -3,19 +3,6 @@
 ## Communication Plan:
 1. Slack
 2. In-Person
-3. Email
-  * My.ryan.milton@gmail.com
-  * dlchambersjr@gmail.com
-  * katherine.lo.smith@gmail.com
-  * thethirdone.g@gmail.com
-  * emeryparks09@hotmail.com
-
-4. Cell Phone
-  * Ryan: 425-905-0666
-  * David: 360-521-3951
-  * Katherine: 316.516.3200
-  * George : 347.909.1024
-  * Emery: 425-248-1833
  
 ## Conflict Plan:
 1. How can I help?
