@@ -15,10 +15,10 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.post('/signin', auth(), (req, res) => {
-  res.send(req.token);
+  res.write('HIT OR MISS\n');
+  res.write('Please make a GET request to /setup to place your ships\n');
+  res.end();
 });
 
+
 export default authRouter;
-
-
-
