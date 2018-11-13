@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 
 const boardSchema = new mongoose.Schema({
   type: { type: String, required: true },
-  player: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   board: {
     A: Array,
     B: Array,
@@ -16,6 +15,7 @@ const boardSchema = new mongoose.Schema({
     I: Array,
     J: Array,
   },
+  player: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Board = mongoose.model('Boards', boardSchema);
