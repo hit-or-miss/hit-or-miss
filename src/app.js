@@ -4,6 +4,7 @@ import express from 'express';
 // Load local middleware
 
 import userRouter from './routes/user-route.js';
+import setupRouter from './routes/setup-route.js';
 import auth from './middleware/auth.js';
 import notFound from './middleware/404.js';
 import error from './middleware/error.js';
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Process incoming through the routers
 app.use(userRouter);
+app.use(setupRouter);
 
 //use local middleware
 app.use(notFound);
