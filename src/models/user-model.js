@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 // import bcrypt from 'bcrypt';
 // FIXME: temporary adjustment hashing for David's Win32 issue
-import bcrypt from '../middleware/hashing.js';
+import bcrypt from '../middleware/hashing,js';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, default: 'user', enum: ['admin', 'user'] },
+  online: Boolean,
+  opponent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   stats: {
     wins: Number,
     losses: Number,
