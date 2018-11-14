@@ -11,7 +11,7 @@
 4. Everything in the group is safe
 5. We leave any situation on the same page
 6. Group Vote
-7.Instructor/TA sanity check
+7. Instructor/TA sanity check
  
 ## Work Plan:
 * Team official office hours – 9 a.m. – 6 p.m.
