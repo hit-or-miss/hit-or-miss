@@ -27,6 +27,9 @@ The following change-log is part of the Team !ASYNC 401 JavaScript midterm proje
 
 #### 11-13-2018
 * (DC) - Created docs folder, updated README.md and change-log.md
+* (EP,GM,KS) - Created [setup-route.js](../src/routes/setup-route.js) and setup routes
+* (DC/RM/DC/RM) - Worked through targeting logic and started creating game-route.js
+* (DC) - Completed tests for middleware (98.11%), models (94.12%), user-route.js (100%).
 
 
 
