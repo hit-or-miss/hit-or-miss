@@ -26,21 +26,21 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     res.end();
   }
   else if (userData.length === 0) {
-    await Ship.create({name:'Aircraft Carrier', size: 5, player:req.user._id});
-    await Ship.create({name:'Battleship', size: 4, player: req.user._id});
-    await Ship.create({name:'Carrier', size: 3, player: req.user._id});
-    await Ship.create({name:'Destroyer', size: 2, player: req.user._id});
-    await Ship.create({name:'Submarine', size: 1, player: req.user._id});
+    await Ship.create({name:'A', size: 5, player:req.user._id});
+    await Ship.create({name:'B', size: 4, player: req.user._id});
+    await Ship.create({name:'C', size: 3, player: req.user._id});
+    await Ship.create({name:'D', size: 2, player: req.user._id});
+    await Ship.create({name:'S', size: 1, player: req.user._id});
     //render a new board
     let data = await Board.create({type:'primary', player:req.user._id, board: {
-      A: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'A'],
-      B: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'A'],
-      C: [ ' ', ' ', ' ', ' ', ' ', ' ', 'D', ' ', ' ', 'A'],
-      D: [ ' ', ' ', ' ', ' ', ' ', ' ', 'D', ' ', ' ', 'A'],
-      E: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'A'],
+      A: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      B: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      C: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      D: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      E: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       F: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       G: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      H: [ ' ', ' ', ' ', ' ', ' ', 'C', 'C', 'C', ' ', ' '],
+      H: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       I: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       J: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
     }});
@@ -59,9 +59,48 @@ setupRouter.get('/setup', auth(), async (req, res) => {
   }
 });
 
-setupRouter.get('/setup/:place', auth(), (req, res) => {
-  Board.find({type:'primary', player:req.user._id});
-   
+setupRouter.get('/setup/:place', auth(), async (req, res) => {
+  let placeArray = req.params.place.split('-');
+  let ship = await Ship.find({name:placeArray[0], player: req.user._id});
+  let size = ship[0].size;
+  ship[0].location = [];
+  if (placeArray[2] === 'R') {
+    let initialLocation = placeArray[1];
+    let startNum = parseInt(initialLocation.slice(1));
+    let row = initialLocation[0];
+    for (let i = startNum; i < startNum + size; i++) {
+      ship[0].location.push(row + i);
+    }
+    await Ship.findOneAndUpdate({name:placeArray[0], player: req.user._id}, {location: ship[0].location});
+  }
+  if (placeArray[2] === 'D') {
+    let initialLocation = placeArray[1];
+    let num = parseInt(initialLocation.slice(1));
+    let row = initialLocation[0];
+    let rowArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    let startIndex = rowArray.findIndex(x => x === row);
+    for (let i = startIndex; i < startIndex + size; i++) {
+      ship[0].location.push(rowArray[i] + num);
+    }
+    await Ship.findOneAndUpdate({name:placeArray[0], player: req.user._id}, {location: ship[0].location});
+  }
+  res.send(ship[0].location);
+
+  await Board.findOneAndUpdate({type:'primary', player:req.user._id},
+    { board: {
+      A: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      B: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      C: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      D: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      E: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      F: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      G: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      H: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      I: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      J: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    }, 
+    });
+
 });
 
 

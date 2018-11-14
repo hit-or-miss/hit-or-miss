@@ -6,7 +6,7 @@ const shipSchema = new mongoose.Schema({
   size: { type: Number, required: true },
   location: { type: Array },
   sunk: { type: Boolean, required: true, default: false },
-  player: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+  player: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Ship = mongoose.model('Ships', shipSchema);
