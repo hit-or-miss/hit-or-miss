@@ -25,8 +25,14 @@ export default (capability) => {
         password,
       };
 
+      console.log(auth);
+
       return User.authenticateBasic(auth)
-        .then(user => _authenticate(user));
+        .then(user => {
+          console.log(user);
+          _authenticate(user);
+
+        });
     }
 
     function _authBearer(authString) {

@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+process.env.APP_SECRET = 'THRPPP';
+
 import supergoose, { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
@@ -8,9 +12,9 @@ import Ship from '../src/models/ship-model.js';
 const { app } = require('../src/app.js');
 const mockRequest = supergoose(app);
 
-const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user' };
+const userInfo = { username: 'foo', password: 'foobar', role: 'user' };
 
-const compInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user' };
+const compInfo = { username: 'comp', password: 'foobar', role: 'user' };
 
 const newShip = { title: 'Aircraft Carrier', size: 5, location: ['d3', 'd4', 'd5', 'd6', 'd7'], sunk: false, player: userInfo._id };
 
@@ -93,22 +97,23 @@ describe('Test targeting imput and results', () => {
 
   it('should receive the right target coordinates', async () => {
 
-    const computer = await new User(compInfo);
+    const computer = await User.create(compInfo);
     console.log(computer);
 
     const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-    await new User(userInfo);
+    const user = await User.create(userInfo);
 
-    const response =
-      await mockRequest
-        .get('/play/a2')
-        .auth('foo', 'foobar');
+    console.log(user);
+
+    await mockRequest
+      .get('/play/a2')
+      .auth('foo', 'foobar');
 
     // expect(response.text.split('.').length).toBe(3);
     // expect(response.status).toBe(200);
 
-
+    expect(computer).toBeDefined();
   });
 
   it('should find a boat with those coordinates', () => { });

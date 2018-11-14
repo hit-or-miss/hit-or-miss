@@ -10,7 +10,7 @@ import Board from '../models/board-model.js';
 import auth from '../middleware/auth';
 
 // TODO: Create a route for /play/:fire 
-fireRouter.get('/play/:fire', auth(), (request, response, next) => {
+fireRouter.get('/play/:fire', auth('play'), (request, response, next) => {
 
   // Grab the request.params of :fire
   const coordinates = request.params.fire;

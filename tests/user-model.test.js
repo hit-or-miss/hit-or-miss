@@ -16,7 +16,7 @@ function createUser(username = 'foo', email = 'foo@bar.com', password = 'foobar'
   return User.create({ username, email, password });
 }
 
-describe('Test the User Model', () => {
+xdescribe('Test the User Model', () => {
 
   it('should create a new user', async () => {
 
