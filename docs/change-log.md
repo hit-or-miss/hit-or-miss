@@ -27,6 +27,7 @@ The following change-log is part of the Team !ASYNC 401 JavaScript midterm proje
 
 #### 11-13-2018
 * (DC) - Created docs folder, updated README.md and change-log.md
+* (EP,GM,KS) - Created `setup-route.js` and setup routes
 
 
 
