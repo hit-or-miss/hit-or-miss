@@ -25,11 +25,9 @@ export default (capability) => {
         password,
       };
 
-      console.log(auth);
 
       return User.authenticateBasic(auth)
         .then(user => {
-          console.log(user);
           _authenticate(user);
 
         });

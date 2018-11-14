@@ -16,8 +16,6 @@ fireRouter.get('/play/:fire', auth('play'), (request, response, next) => {
   const coordinates = request.params.fire;
 
   console.log(coordinates);
-
-
   console.log(request.user);
 
   // TODO: verify the request.params of :fire matches a Ship "Location"
