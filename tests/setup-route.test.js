@@ -31,11 +31,24 @@ describe('Setup Routes', () => {
     it('should create a new empty playing board', async() => {
     });
     xit('should...', () => {
+});
+
+process.env.APP_SECRET = 'password';
+
+xdescribe('Setup Routes', () => {
+
+  describe('/setup', () => {
+    it('should...', () => {
+
+    });
+
+    it('should...', () => {
 
     });
   });
 
   describe('/setup/:places', () => {
+
     it('should pass in a valid endpoint for the ship', async() => {
       const userInfo = await User.create( {
         username: 'foo',
@@ -51,6 +64,10 @@ describe('Setup Routes', () => {
       
        
   
+
+    it('should...', () => {
+
+
     });
 
     it('should...', () => {

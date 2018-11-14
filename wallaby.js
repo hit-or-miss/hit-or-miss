@@ -1,5 +1,9 @@
 module.exports = function (wallaby) {
 
+  // add any needed environment variables here
+  process.env.PORT = 3000;
+  process.env.APP_SECRET = 'SecretCodeForTests';
+
   return {
 
     files: ['src/**/*.js', 'tests/supergoose.js'],

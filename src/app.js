@@ -5,6 +5,9 @@ import express from 'express';
 
 import userRouter from './routes/user-route.js';
 import setupRouter from './routes/setup-route.js';
+
+import gameRouter from './routes/game-route.js';
+
 import auth from './middleware/auth.js';
 import notFound from './middleware/404.js';
 import error from './middleware/error.js';
@@ -18,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // Process incoming through the routers
 app.use(userRouter);
 app.use(setupRouter);
+app.use(gameRouter);
 
 //use local middleware
 app.use(notFound);
