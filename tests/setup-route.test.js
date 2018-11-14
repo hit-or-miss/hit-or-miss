@@ -6,6 +6,7 @@ import supergoose, { startDB, stopDB } from './supergoose.js';
 import User from '../src/auth/model.js';
 
 const mockRequest = supergoose(server);
+// hello
 
 beforeAll(startDB);
 afterAll(stopDB);
