@@ -6,7 +6,7 @@
     "db": "",
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test-watch": "jest --watchAll --coverage",
+    "test-watch": "jest --watchAll --verbose",
     "test": "jest --runInBand",
     "lint": "eslint '**/*.js'",
     "debug": "nodemon --inspect index.js"

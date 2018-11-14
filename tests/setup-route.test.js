@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 process.env.APP_SECRET = 'password';
 
-describe('Setup Routes', () => {
+xdescribe('Setup Routes', () => {
 
   describe('/setup', () => {
     it('should...', () => {

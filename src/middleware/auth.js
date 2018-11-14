@@ -25,7 +25,6 @@ export default (capability) => {
         password,
       };
 
-
       return User.authenticateBasic(auth)
         .then(user => {
           _authenticate(user);
