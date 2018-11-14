@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, default: 'user', enum: ['admin', 'user'] },
+  online: Boolean,
+  opponent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   stats: {
     wins: Number,
     losses: Number,
@@ -34,9 +36,13 @@ userSchema.methods.can = function (capability) {
 };
 
 userSchema.statics.authenticateBasic = function (auth) {
+  console.log(auth);
   let query = { username: auth.username };
   return this.findOne(query)
-    .then(user => user && user.comparePassword(auth.password))
+    .then(user => {
+      console.log(user);
+      return user && user.comparePassword(auth.password);
+    })
     .catch(console.error);
 };
 
@@ -52,6 +58,7 @@ userSchema.statics.authenticateToken = function (token) {
 };
 
 userSchema.methods.comparePassword = function (password) {
+  console.log(password, this.password);
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
 };
