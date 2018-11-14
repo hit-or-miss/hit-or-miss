@@ -1,11 +1,12 @@
 'use strict';
 
-//Receives a custom err and assigns one if not received.
-export default (err, req, res) => {
-  console.log('__SERVER ERROR__');
+// Custom Error Handler because we always want to return a JSON response
+export default (err, req, res, next) => {
+  console.log(err);
   let error = {
-    error: (typeof err === 'object' && err.message) || err,
+    error: (typeof err === 'object' && err.statusMessage) || err,
   };
+
   res.statusCode = (typeof err === 'object' && err.status) || 500;
   res.statusMessage = (typeof err === 'object' && err.statusMessage) || 'Server Error';
   res.setHeader('Content-Type', 'application/json');
