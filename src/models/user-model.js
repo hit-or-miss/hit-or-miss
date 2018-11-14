@@ -40,7 +40,7 @@ userSchema.statics.authenticateBasic = function (auth) {
   let query = { username: auth.username };
   return this.findOne(query)
     .then(user => {
-      console.log(user);
+      // console.log(user);
       return user && user.comparePassword(auth.password);
     })
     .catch(console.error);
@@ -58,7 +58,7 @@ userSchema.statics.authenticateToken = function (token) {
 };
 
 userSchema.methods.comparePassword = function (password) {
-  console.log(password, this.password);
+  // console.log(password, this.password);
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
 };
