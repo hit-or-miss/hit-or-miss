@@ -112,12 +112,33 @@ describe('Test targeting imput and results', () => {
     const user = await User.create(userInfo);
     console.log('---I AM THE USER',user);
 
-    const newUserShip = { name: 'Aircraft Carrier', size: 5, location: ['d5'], sunk: false, player: user._id };
+    const newUserShip = { name: 'Aircraft Carrier', size: 5, location: ['d3', 'd4', 'd5', 'd6', 'd7'], sunk: false, player: user._id };
     const newUserBattleShip = { name: 'Battleship', size: 4, location: ['j3', 'j4', 'j5', 'j6'], sunk: false, player: user._id };
 
     // const newCompShip = { name: 'Aircraft Carrier', size: 5, location: ['d3', 'd4', 'd5', 'd6', 'd7'], sunk: false, player: computer._id };
     const userShip = await Ship.create(newUserShip);
     const userBattleShip = await Ship.create(newUserBattleShip);
+
+    const newBoard = {
+      type: 'targeting',
+      board: {
+        a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      },
+      player: user._id,
+    };
+
+    const targetBoard = await new Board(newBoard);
+
+    console.log(targetBoard);
 
     // const compShip = await Ship.create(newCompShip);
     console.log('---I AM A USER SHIP', userShip);
