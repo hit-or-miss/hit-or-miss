@@ -47,6 +47,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       console.log('NO SHIPS MATCH COORDINATES');
     }
     // console.log(userShips[i].location);
+
   }
   
   let userBoards = await Board.find({});

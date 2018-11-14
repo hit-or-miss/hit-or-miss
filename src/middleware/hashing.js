@@ -14,16 +14,8 @@ const hash = (password, salt = 10) => {
 
 const compare = (password, storedPass) => {
 
-  // const hashedPass = Promise.resolve(hash(password));
-  // console.log(hashedPass);
-
   return hash(password)
     .then(hashedPass => Promise.resolve(hashedPass === storedPass));
-
-
-
-
-  // return Promise.resolve(hashedPass === storedPass);
 
 };
 

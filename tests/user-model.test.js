@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
@@ -11,83 +9,84 @@ beforeEach(async () => {
   await User.deleteMany({});
 });
 
-// helper function to make a user for each test
-function createUser(username = 'foo', email = 'foo@bar.com', password = 'foobar') {
-  return User.create({ username, email, password });
-}
+const compInfo = { username: 'comp', password: 'ai' };
 
-xdescribe('Test the User Model', () => {
+describe('Test the User Model', () => {
 
-  it('should create a new user', async () => {
+  it('should create a new user model', async () => {
+    const computer = await User.create(compInfo);
 
-    const newUser = await createUser();
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-    expect(newUser.username).toBe('foo');
-    expect(newUser.email).toBe('foo@bar.com');
-    expect(newUser.password).toBeDefined();
+    const user = await User.create(userInfo);
+
+    expect(user.username).toBe(userInfo.username);
 
   });
 
   it('should find a user', async () => {
 
-    const user = await createUser();
+    const computer = await User.create(compInfo);
+
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+
+    const user = await User.create(userInfo);
     const foundUser = await User.findById(user._id);
 
-    expect(foundUser.username).toBe(user.username);
-
+    expect(foundUser.opponent).toEqual(computer._id);
 
   });
 
   it('should fail if username is missing', async () => {
-
     try {
-      await createUser(null);
-    } catch (err) {
+      await User.create({ password: 'test' });
+    } catch (error) {
 
-      expect(err.message).toEqual(expect.stringContaining('Users validation failed: username'));
-
-    }
-
-  });
-
-  it('should fail if email is missing', async () => {
-
-    try {
-      await createUser(undefined, null);
-    } catch (err) {
-
-      expect(err.message).toEqual(expect.stringContaining('Users validation failed: email'));
+      expect(error.message).toEqual(expect.stringContaining('User validation failed: username'));
     }
 
   });
 
   it('should fail if password is missing', async () => {
 
-    try {
-      await createUser(undefined, undefined, null);
-    } catch (err) {
+    {
+      try {
+        await User.create({ username: 'test' });
+      } catch (error) {
 
-      expect(err.message).toEqual(expect.stringContaining('Users validation failed: password'));
+        expect(error.message).toEqual(expect.stringContaining('User validation failed: password'));
+      }
     }
 
   });
 
   it('should fail if username is NOT unique', async () => {
 
-    await createUser();
+    const computer = await User.create(compInfo);
 
-    try {
-      await createUser(undefined, undefined, 'foobar');
-    } catch (err) {
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-      expect(err.message).toEqual(expect.stringContaining('E11000 duplicate key error'));
+    await User.create(userInfo);
+
+    {
+      try {
+        await User.create({ username: 'foo', password: 'bar' });
+      } catch (error) {
+
+        expect(error.message).toEqual(expect.stringContaining('E11000 duplicate key error dup key'));
+      }
     }
 
   });
 
   it('should generate a token', async () => {
 
-    const user = await createUser();
+    const computer = await User.create(compInfo);
+
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+
+    const user = await User.create(userInfo);
+
     const token = user.generateToken();
 
     expect(token).toBeDefined();
@@ -98,9 +97,13 @@ xdescribe('Test the User Model', () => {
 
   it('should match a good password', async () => {
 
-    const password = 'testPassword';
+    const password = 'foobar';
 
-    const user = await createUser(undefined, undefined, password);
+    const computer = await User.create(compInfo);
+
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+
+    const user = await User.create(userInfo);
 
     const passwordsMatch = await user.comparePassword(password);
 
@@ -110,7 +113,11 @@ xdescribe('Test the User Model', () => {
 
   it('should not match bad password', async () => {
 
-    const user = await createUser();
+    const computer = await User.create(compInfo);
+
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+
+    const user = await User.create(userInfo);
 
     const passwordsMatch = await user.comparePassword('badPass');
 
@@ -120,28 +127,41 @@ xdescribe('Test the User Model', () => {
 
   it('should authenticate if credientials match', async () => {
 
-    await createUser();
+    const computer = await User.create(compInfo);
 
-    const user = await User.authenticateBasic({ username: 'foo', password: 'foobar' });
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-    expect(user.username).toBe('foo');
+    await User.create(userInfo);
+
+    const validUser = await User.authenticateBasic({ username: 'foo', password: 'foobar' });
+
+    expect(validUser.username).toBe('foo');
 
   });
 
   it('should NOT authenticate if credientials DO NOT match', async () => {
 
-    await createUser();
+    const computer = await User.create(compInfo);
 
-    const user = await User.authenticateBasic({ username: 'foo', password: 'badPass' });
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-    expect(user).toBeNull();
+    await User.create(userInfo);
+
+    const invalidUser = await User.authenticateBasic({ username: 'foo', password: 'badPass' });
+
+    expect(invalidUser).toBeNull();
 
   });
 
 
   it('should authenticate a GOOD USER token', async () => {
 
-    const user = await createUser();
+    const computer = await User.create(compInfo);
+
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+
+    const user = await User.create(userInfo);
+
     const token = user.generateToken();
     const validUser = await User.authenticateToken(token);
 
@@ -151,20 +171,19 @@ xdescribe('Test the User Model', () => {
 
   it('should NOT authenticate a BAD USER token', async () => {
 
+    const computer = await User.create(compInfo);
 
-    const token = 'thisisnotthetokenyourelookingformovealongnow';
+    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
 
-    await createUser()
-      .then(() => { User.authenticateToken(token); })
-      .catch(error => { expect(error).toBeDefined(); });
+    const user = await User.create(userInfo);
 
+    const token = 'thisisnot.thetokenyourelookingfor.movealongnow';
+
+    try {
+      await User.authenticateToken(token);
+    } catch (error) {
+      expect(error.message).toEqual('invalid token');
+    }
   });
-
-
-
-
-
-
-
 
 });
