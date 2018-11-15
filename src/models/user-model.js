@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+// FIXME: temporary adjustment hashing for David's Win32 issue
+//import bcrypt from '../middleware/hashing.js';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, default: 'user', enum: ['admin', 'user'] },
+  online: Boolean,
+  opponent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   stats: {
     wins: Number,
     losses: Number,
@@ -34,7 +38,9 @@ userSchema.methods.can = function (capability) {
 userSchema.statics.authenticateBasic = function (auth) {
   let query = { username: auth.username };
   return this.findOne(query)
-    .then(user => user && user.comparePassword(auth.password))
+    .then(user => {
+      return user && user.comparePassword(auth.password);
+    })
     .catch(console.error);
 };
 
@@ -59,7 +65,7 @@ userSchema.methods.generateToken = function () {
     id: this._id,
     capabilities: capabilities[this.role],
   };
-  // return jwt.sign(tokenData, 'process.env.SECRET');
+
   return jwt.sign(tokenData, process.env.APP_SECRET);
 };
 
