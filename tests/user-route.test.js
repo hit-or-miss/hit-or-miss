@@ -4,6 +4,8 @@ import { app } from '../src/app.js';
 
 import User from '../src/models/user-model.js';
 
+import userText from '../src/middleware/user-text.js';
+
 const mockRequest = supergoose(app);
 
 const newUserInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar' };
@@ -34,7 +36,7 @@ describe('Test the API', () => {
       await mockRequest.post('/signup')
         .send(newUserInfo);
 
-    expect(response.text.split('.').length).toBe(3);
+    expect(response.text).toContain('START:  GET hotormiss.fun/START');
     expect(response.status).toBe(200);
   });
 
@@ -80,13 +82,16 @@ describe('Test the API', () => {
 
   it('should allow a VALID user to sign in with BEARER Auth.', async () => {
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar' };
+    const userInfo = { username: 'foo', password: 'foobar' };
 
     const signUpRes = await mockRequest.post('/signup').send(userInfo);
 
+    const parseResponse = signUpRes.text.split('\n\n');
+    const token = (parseResponse[2]);
+
     const signInRes =
       await mockRequest.post('/signin')
-        .set('Authorization', `Bearer ${signUpRes.text}`);
+        .set('Authorization', `Bearer ${token}`);
 
     expect(signInRes.text).toContain('HIT OR MISS');
     expect(signInRes.status).toBe(200);

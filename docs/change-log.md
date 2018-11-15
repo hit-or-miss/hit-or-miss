@@ -34,7 +34,7 @@ The following change-log is part of the Team !ASYNC 401 JavaScript midterm proje
 
 
 #### 11-14-2018
-
+(DC) Helped with targeting algorithm, created filed and module to render user text information for a basic UX.
 
 
 #### 11-15-2018
