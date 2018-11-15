@@ -16,6 +16,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
   let tracker = await Board.findOne({ type: 'tracking', player: request.user._id });
   let computer = await User.findOne({ username: 'Computer' });
   //console.log('COMPUTER', computer);
+  
   // Grab the request.params of :fire
   let coordinates = request.params.fire.toLowerCase();
   
@@ -91,7 +92,6 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
         console.log('NO SHIPS MATCH COORDINATES');
         break;
       }
-      // console.log(computerShips[i].location);
   
     }
 
@@ -164,10 +164,8 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
 
       tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id   }, { board: primary2.board }, { new: true });
 
-      //console.log('NO USER SHIPS MATCH COORDINATES');
       break;
     }
-    // console.log(userShips[i].location);
 
   }
 
@@ -186,47 +184,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
   response.write('H ' + primary.board.h.join('  ') + '\n');
   response.write('I ' + primary.board.i.join('  ') + '\n');
   response.write('J ' + primary.board.j.join('  ') + '\n');
-  response.end();
-
-
-
-  // Ship.find({ player: request.user._id}).then(computerShips => {
-  //   console.log(computerShips);
-  // });
-  console.log('hello');
-  // console.log(computerShips);
-  
-  
-  // TODO: verify the request.params of :fire matches a Ship "Location"
-  
-  // if (Ship.location.includes(coordinates)) {
-    
-  //   // TODO: If it does match, splice from the Ship "Location" array AND mark the board with _____
-    
-  //   let shipHit = Ship.location.indexOf(coordinates);
-    
-  //   Ship.location.splice(shipHit, 1);
-    
-  //   // let boardHit =
-  //   //   response.send(Board.board);
-  // }
-  //response.send('End of game route.');
+  response.end();  
 });
-
-
-// TODO: If it does not match, report back to player with "MISS" AND mark the board with _____
-
-// TODO: GAME OVER STATE
-
-
-// TODO: Continiously check the "Location" of all Ship's
-
-
-// TODO: If all Ship's "Location" are NOT empty, continue with game
-
-
-// TODO: If all Ship's "Location" are empty then Respond with GAME OVER
-
-
 
 export default fireRouter;
