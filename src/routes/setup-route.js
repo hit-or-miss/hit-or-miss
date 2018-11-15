@@ -126,9 +126,22 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
       for (let i = startNum; i < startNum + size; i++) {
         ship.location.push(row + i);
       }
-      await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location });
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let overlapping = false;
+      for (let i = 0; i < alreadyPlacedShips.length; i++) {
+        if (alreadyPlacedShips[i].name !== placeArray[0]) {
+          for (let j = 0; j < ship.location.length; j++) {
+            if (alreadyPlacedShips[i].location.includes(ship.location[j])) {
+              res.write('No overlapping ships!\n');
+              overlapping = true;
+            }
+          }
+        }
+      }  
+      if (overlapping === false) {
+        await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
+      }
     }
-    // let locationStart = ship.location[0];
   }
 
   // Update ship location array with coordinates going left
@@ -143,7 +156,21 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
       for (let i = startNum - size + 1; i <= startNum; i++) {
         ship.location.push(row + i);
       }
-      await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location });
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let overlapping = false;
+      for (let i = 0; i < alreadyPlacedShips.length; i++) {
+        if (alreadyPlacedShips[i].name !== placeArray[0]) {
+          for (let j = 0; j < ship.location.length; j++) {
+            if (alreadyPlacedShips[i].location.includes(ship.location[j])) {
+              res.write('No overlapping ships!\n');
+              overlapping = true;
+            }
+          }
+        }
+      }  
+      if (overlapping === false) {
+        await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
+      }
     }
   }
 
@@ -161,7 +188,21 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
       for (let i = startIndex; i < startIndex + size; i++) {
         ship.location.push(rowArray[i] + num);
       }
-      await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location });
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let overlapping = false;
+      for (let i = 0; i < alreadyPlacedShips.length; i++) {
+        if (alreadyPlacedShips[i].name !== placeArray[0]) {
+          for (let j = 0; j < ship.location.length; j++) {
+            if (alreadyPlacedShips[i].location.includes(ship.location[j])) {
+              res.write('No overlapping ships!\n');
+              overlapping = true;
+            }
+          }
+        }
+      }  
+      if (overlapping === false) {
+        await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
+      }
     }
   }
 
@@ -179,7 +220,21 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
       for (let i = startIndex - size + 1; i <= startIndex; i++) {
         ship.location.push(rowArray[i] + num);
       }
-      await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location });
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let overlapping = false;
+      for (let i = 0; i < alreadyPlacedShips.length; i++) {
+        if (alreadyPlacedShips[i].name !== placeArray[0]) {
+          for (let j = 0; j < ship.location.length; j++) {
+            if (alreadyPlacedShips[i].location.includes(ship.location[j])) {
+              res.write('No overlapping ships!\n');
+              overlapping = true;
+            }
+          }
+        }
+      }  
+      if (overlapping === false) {
+        await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
+      }
     }
   }
 
