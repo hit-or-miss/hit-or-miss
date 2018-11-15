@@ -9,7 +9,6 @@ import supergoose, { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
 import Board from '../src/models/board-model.js';
-// import Ships from '../src/models/ship-model.js';
 import Ship from '../src/models/ship-model.js';
 
 const { app } = require('../src/app.js');
@@ -30,58 +29,63 @@ describe('Setup Routes', () => {
 
   describe('/setup', () => {
 
-    it('should return a 200 status code if a valid direction value for the ship is input', async () => {
+    it('should return a 200 status code if url is valid', async () => {
 
       const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
 
-      const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
-        });
-
-      const setupBoard = await mockRequest.get('/setup').auth('foo', 'bar');
-      console.log(setupBoard.text);
-      // expect(placeShip.status).toBe(200);
+      const response = await mockRequest.get('/setup').auth('foo', 'bar');
+      expect(response.status).toBe(200);
     });
 
-    xit('should throw 400 error if an invalid direction value is entered', async () => {
+    it('should return a 404 error if the url is invalid', async () => {
 
       const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
 
-      const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
-      });
-  
-      const setupBoard = await mockRequest.get('/setup/A-B4-F').auth('foo', 'bar');
-      expect(setupBoard.status).toBe(400);
+      const response = await mockRequest.get('/setdown').auth('foo', 'bar');
+      expect(response.status).toBe(404);
     });
 
-    xit('should throw 200 error if a valid ship value is entered', async () => {
+    it('should correctly associate a player id with a ship id', async () => {
 
-      const userInfo = await User.create( {username: 'foo', password: 'bar',
+
+        const userInfo = await User.create( {username: 'foo', password: 'bar',
+      });
+      const shipInfoA = await Ship.create( {name: 'A', size: 5, location:['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
+      });
+      const shipInfoB = await Ship.create( {name: 'B', size: 4, location:['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
+      });
+      const shipInfoC = await Ship.create( {name: 'C', size: 3, location:['d3', 'd4', 'd5', 'd6', 'd7'],player: userInfo._id,
+      });
+      const shipInfoD = await Ship.create( {name: 'D',size: 2, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
+      });
+      const shipInfoS = await Ship.create( {name: 'S', size: 1, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
       const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
       });
-  
-      const setupBoard = await mockRequest.get('/setup/S-B4-R').auth('foo', 'bar');
-      expect(setupBoard.status).toBe(200);
+      const response = await mockRequest.get('/setup').auth('foo', 'bar');
+
+      expect(shipInfoA.player).toEqual(userInfo._id);
     });
 
-    xit('should throw 404 error if an invalid ship value is entered', async () => {
+    it('should correctly associate a primary board with a player', async () => {
 
-      const userInfo = await User.create( {username: 'foo', password: 'bar',
+      const userInfo = await User.create( {username: 'foofoo', password: 'foobar',
       });
+
       const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
       });
-    
-      const setupBoard = await mockRequest.get('/setup/F-B4-R').auth('foo', 'bar');
-      expect(setupBoard.status).toBe(404);
+      const response = await mockRequest.get('/setup').auth('foofoo', 'foobar');
+
+      expect(boardInfo.player).toEqual(userInfo._id);
     });
 
   });
 
-  xdescribe('/setup/:places', () => {
+  describe('/setup/:places', () => {
 
-    it('should return a 200 status code if a valid direction value for the ship is input', async () => {
+    it('should return a 200 status code if a valid url direction identifier is entered', async () => {
 
       const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
@@ -102,7 +106,7 @@ describe('Setup Routes', () => {
       expect(placeShip.status).toBe(200);
     });
 
-    it('should throw 400 error if an invalid direction value is entered', async () => {
+    it('should throw 400 error if an invalid url direction identifier is entered', async () => {
 
       const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
@@ -119,11 +123,32 @@ describe('Setup Routes', () => {
       const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
         });
   
-        const placeShip = await mockRequest.get('/setup/A-B4-F').auth('foo', 'bar');
-        expect(placeShip.status).toBe(400);
-      });
+      const placeShip = await mockRequest.get('/setup/A-B4-F').auth('foo', 'bar');
+      expect(placeShip.status).toBe(400);
+    });
 
-      it('should throw 200 error if a valid ship value is entered', async () => {
+    it('should throw 200 error if a valid ship url identifier is entered', async () => {
+
+      const userInfo = await User.create( {username: 'foo', password: 'bar',
+      });
+      const shipInfoA = await Ship.create( {name: 'A', size: 5, location:['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
+      });
+      const shipInfoB = await Ship.create( {name: 'B', size: 4, location:['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
+      });
+      const shipInfoC = await Ship.create( {name: 'C', size: 3, location:['d3', 'd4', 'd5', 'd6', 'd7'],player: userInfo._id,
+      });
+      const shipInfoD = await Ship.create( {name: 'D',size: 2, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
+      });
+      const shipInfoS = await Ship.create( {name: 'S', size: 1, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
+      });
+      const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
+        });
+  
+      const placeShip = await mockRequest.get('/setup/S-B4-R').auth('foo', 'bar');
+      expect(placeShip.status).toBe(200);
+    });
+
+    it('should throw 404 error if an invalid ship url identifier is entered', async () => {
 
         const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
@@ -140,29 +165,8 @@ describe('Setup Routes', () => {
       const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
         });
     
-          const placeShip = await mockRequest.get('/setup/S-B4-R').auth('foo', 'bar');
-          expect(placeShip.status).toBe(200);
-        });
-
-        it('should throw 404 error if an invalid ship value is entered', async () => {
-
-          const userInfo = await User.create( {username: 'foo', password: 'bar',
-        });
-        const shipInfoA = await Ship.create( {name: 'A', size: 5, location:['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
-        });
-        const shipInfoB = await Ship.create( {name: 'B', size: 4, location:['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
-        });
-        const shipInfoC = await Ship.create( {name: 'C', size: 3, location:['d3', 'd4', 'd5', 'd6', 'd7'],player: userInfo._id,
-        });
-        const shipInfoD = await Ship.create( {name: 'D',size: 2, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
-        });
-        const shipInfoS = await Ship.create( {name: 'S', size: 1, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
-        });
-        const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
-          });
-      
-          const placeShip = await mockRequest.get('/setup/F-B4-R').auth('foo', 'bar');
-          expect(placeShip.status).toBe(404);
-        });
+      const placeShip = await mockRequest.get('/setup/F-B4-R').auth('foo', 'bar');
+      expect(placeShip.status).toBe(404);
+    });
   });
 });
