@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 // FIXME: temporary adjustment hashing for David's Win32 issue
-import bcrypt from '../middleware/hashing.js';
+//import bcrypt from '../middleware/hashing.js';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
