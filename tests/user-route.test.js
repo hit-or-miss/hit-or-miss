@@ -4,8 +4,6 @@ import { app } from '../src/app.js';
 
 import User from '../src/models/user-model.js';
 
-import userText from '../src/middleware/user-text.js';
-
 const mockRequest = supergoose(app);
 
 const newUserInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar' };

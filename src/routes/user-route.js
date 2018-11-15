@@ -9,9 +9,6 @@ import userText from '../middleware/user-text.js';
 
 authRouter.post('/signup', (req, res, next) => {
 
-  console.log(req.body);
-
-
   User.create(req.body)
     .then((user) => {
 
