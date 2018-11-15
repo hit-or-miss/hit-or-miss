@@ -1,0 +1,18 @@
+===============================================================
+
+Hit or miss! is based on the classic game of Battleship and uses 
+standard HTTP METHODS (GET/POST) to play the game.
+
+Codefellowia is under attack and your naval armada is the only
+thing standing between success and mid-term project failure.
+
+Your mission: Destroy the advancing enemy naval fleet before 
+they destroy you!
+
+Hit or Miss is a turn based game alternating between you and 
+your opponent.  Because of your superior experience, you will
+start the game by placing the ships in your armada around your 
+PRIMARY playing board. Instructions for placing your ships can 
+be found at: GET hitormiss.fun/setup/help.
+
+================================================================
