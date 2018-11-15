@@ -15,6 +15,7 @@ const boardSchema = new mongoose.Schema({
     i: Array,
     j: Array,
   },
+  pastHits: Array,
   player: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
