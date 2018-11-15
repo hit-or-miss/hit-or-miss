@@ -1,0 +1,28 @@
+THE GAME WHERE YOU GET TO LEAD YOUR SHIPS TO VICTORY!             
+╔════════════════════════════════════════════════════╗ 
+║  ##     ## #### ########       #######  ########   ║
+║  ##     ##  ##     ##         ##     ## ##     ##  ║
+║  ##     ##  ##     ##         ##     ## ##     ##  ║
+║  #########  ##     ##         ##     ## ########   ║ 
+║  ##     ##  ##     ##         ##     ## ##   ##    ║
+║  ##     ##  ##     ##         ##     ## ##    ##   ║
+║  ##     ## ####    ##          #######  ##     ##  ║
+║                                                    ║
+║      ##     ## ####  ######   ######    ####       ║   
+║      ###   ###  ##  ##    ## ##    ##   ####       ║   
+║      #### ####  ##  ##       ##         ####       ║   
+║      ## ### ##  ##   ######   ######     ##        ║   
+║      ##     ##  ##        ##       ##              ║  
+║      ##     ##  ##  ##    ## ##    ##   ####       ║   
+║      ##     ## ####  ######   ######    ####       ║
+║                                                    ║
+╚════════════════════════════════════════════════════╝
+
+NEW USER: 
+POST hitormiss.fun/signup username=<username> password=<pass>
+
+RULES:  GET hitormiss.fun/RULES
+START:  GET hotormiss.fun/START
+HELP:   GET hitormiss.fun/HELP
+
+You can add HELP during setup or game play for context sensitive help. (E.G. GET hitormiss.fun/setup/help)

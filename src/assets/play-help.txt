@@ -1,0 +1,17 @@
+==========================================
+To shoot the enemy ships:
+  * GET hitormiss.com/play/<action>
+
+ACTION: <row><column>
+
+Examples: 
+•	T-D3  ->  Shoot a missile at enemy coordinate D3
+•	T-J10 ->  Shoot a missile at enemy coordinate J10
+
+The targeting computer will notify you if you HIT or MISS your target.
+
+You may recall these instructions using 
+GET hitormiss.fun/play/help
+
+==========================================
+
