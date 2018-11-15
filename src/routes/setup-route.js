@@ -8,6 +8,19 @@ import auth from '../middleware/auth.js';
 //import error from '../middleware/error.js';
 
 setupRouter.get('/setup', auth(), async (req, res) => {
+  await Board.findOneAndUpdate({ type: 'tracking', player: req.user._id}, { board: {
+    a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  }, pastHits: [],
+  });
   let userData = await Board.find({ type: 'primary', player: req.user._id });
 
   // If user already has a board setup, render that board
@@ -18,48 +31,61 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     // FIXME: David - we talked about working with lowercase letters for everything.  Do you want to change?
 
     res.write('    1  2  3  4  5  6  7  8  9  10\n');
-    res.write('A' + data[0].board.a.join('  ') + '\n');
-    res.write('B' + data[0].board.b.join('  ') + '\n');
-    res.write('C' + data[0].board.c.join('  ') + '\n');
-    res.write('D' + data[0].board.d.join('  ') + '\n');
-    res.write('E' + data[0].board.e.join('  ') + '\n');
-    res.write('F' + data[0].board.f.join('  ') + '\n');
-    res.write('G' + data[0].board.g.join('  ') + '\n');
-    res.write('H' + data[0].board.h.join('  ') + '\n');
-    res.write('I' + data[0].board.i.join('  ') + '\n');
-    res.write('J' + data[0].board.j.join('  ') + '\n');
+    res.write('A   ' + data[0].board.a.join('  ') + '\n');
+    res.write('B   ' + data[0].board.b.join('  ') + '\n');
+    res.write('C   ' + data[0].board.c.join('  ') + '\n');
+    res.write('D   ' + data[0].board.d.join('  ') + '\n');
+    res.write('E   ' + data[0].board.e.join('  ') + '\n');
+    res.write('F   ' + data[0].board.f.join('  ') + '\n');
+    res.write('G   ' + data[0].board.g.join('  ') + '\n');
+    res.write('H   ' + data[0].board.h.join('  ') + '\n');
+    res.write('I   ' + data[0].board.i.join('  ') + '\n');
+    res.write('J   ' + data[0].board.j.join('  ') + '\n');
     res.end();
   }
   else if (userData.length === 0) {
     await Ship.create({ name: 'A', size: 5, player: req.user._id });
     await Ship.create({ name: 'B', size: 4, player: req.user._id });
     await Ship.create({ name: 'C', size: 3, player: req.user._id });
-    await Ship.create({ name: 'D', size: 2, player: req.user._id });
-    await Ship.create({ name: 'S', size: 1, player: req.user._id });
+    await Ship.create({ name: 'D', size: 3, player: req.user._id });
+    await Ship.create({ name: 'S', size: 3, player: req.user._id });
     //render a new board
-    let data = await Board.create({type: 'primary', player: req.user._id, board: {
-      a: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      b: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      c: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      d: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      e: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      f: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      g: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      h: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      i: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      j: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    await Board.create({type: 'tracking', player: req.user._id, board: {
+      a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    }, pastHits: [],
+    });
+    let print = await Board.create({type: 'primary', player: req.user._id, board: {
+      a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
     }});
-    res.write('    1  2  3  4  5  6  7  8  9  10\n');
-    res.write('A' + data.board.a.join('  ') + '\n');
-    res.write('B' + data.board.b.join('  ') + '\n');
-    res.write('C' + data.board.c.join('  ') + '\n');
-    res.write('D' + data.board.d.join('  ') + '\n');
-    res.write('E' + data.board.e.join('  ') + '\n');
-    res.write('F' + data.board.f.join('  ') + '\n');
-    res.write('G' + data.board.g.join('  ') + '\n');
-    res.write('H' + data.board.h.join('  ') + '\n');
-    res.write('I' + data.board.i.join('  ') + '\n');
-    res.write('J' + data.board.j.join('  ') + '\n');
+    res.write('  1  2  3  4  5  6  7  8  9  10\n');
+    res.write('A ' + print.board.a.join('  ') + '\n');
+    res.write('B ' + print.board.b.join('  ') + '\n');
+    res.write('C ' + print.board.c.join('  ') + '\n');
+    res.write('D ' + print.board.d.join('  ') + '\n');
+    res.write('E ' + print.board.e.join('  ') + '\n');
+    res.write('F ' + print.board.f.join('  ') + '\n');
+    res.write('G ' + print.board.g.join('  ') + '\n');
+    res.write('H ' + print.board.h.join('  ') + '\n');
+    res.write('I ' + print.board.i.join('  ') + '\n');
+    res.write('J ' + print.board.j.join('  ') + '\n');
     res.end();
   }
 });
@@ -73,9 +99,9 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   // Update ship location array with coordinates going right
   if (placeArray[2] === 'R') {
     let initialLocation = placeArray[1];
-    let startNum = parseInt(initialLocation.slice(1));
+    let startNum = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
-    if (startNum + size > 11) {
+    if (startNum + size > 10) {
       res.write('Bad request\n\n');
     }
     else {
@@ -89,9 +115,9 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   // Update ship location array with coordinates going left
   if (placeArray[2] === 'L') {
     let initialLocation = placeArray[1];
-    let startNum = parseInt(initialLocation.slice(1));
+    let startNum = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
-    if (startNum - size < 0) {
+    if (startNum - size < -1) {
       res.write('Bad request\n\n');
     }
     else {
@@ -105,7 +131,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   // Update ship location array with coordinates going down
   if (placeArray[2] === 'D') {
     let initialLocation = placeArray[1];
-    let num = parseInt(initialLocation.slice(1));
+    let num = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
     let rowArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
     let startIndex = rowArray.findIndex(x => x === row);
@@ -123,7 +149,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   // Update ship location array with coordinates going up
   if (placeArray[2] === 'U') {
     let initialLocation = placeArray[1];
-    let num = parseInt(initialLocation.slice(1));
+    let num = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
     let rowArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
     let startIndex = rowArray.findIndex(x => x === row);
@@ -141,16 +167,16 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   // Clear the primary board before placing the ships
   let primary = await Board.findOneAndUpdate({type:'primary', player:req.user._id},
     { board: {
-      a: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      b: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      c: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      d: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      e: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      f: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      g: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      h: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      i: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      j: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      a: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      b: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      c: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      d: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      e: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      f: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      g: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      h: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      i: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      j: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
     } }, { new: true });
 
   // Find aircraft carrier location and place it on primary board
@@ -212,17 +238,17 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   let print = await Board.findOneAndUpdate({type:'primary', player:req.user._id},
     { board: primary.board }, { new: true });
 
-  res.write('    1  2  3  4  5  6  7  8  9  10\n');
-  res.write('A' + print.board.a.join('  ') + '\n');
-  res.write('B' + print.board.b.join('  ') + '\n');
-  res.write('C' + print.board.c.join('  ') + '\n');
-  res.write('D' + print.board.d.join('  ') + '\n');
-  res.write('E' + print.board.e.join('  ') + '\n');
-  res.write('F' + print.board.f.join('  ') + '\n');
-  res.write('G' + print.board.g.join('  ') + '\n');
-  res.write('H' + print.board.h.join('  ') + '\n');
-  res.write('I' + print.board.i.join('  ') + '\n');
-  res.write('J' + print.board.j.join('  ') + '\n');
+  res.write('  1  2  3  4  5  6  7  8  9  10\n');
+  res.write('A ' + print.board.a.join('  ') + '\n');
+  res.write('B ' + print.board.b.join('  ') + '\n');
+  res.write('C ' + print.board.c.join('  ') + '\n');
+  res.write('D ' + print.board.d.join('  ') + '\n');
+  res.write('E ' + print.board.e.join('  ') + '\n');
+  res.write('F ' + print.board.f.join('  ') + '\n');
+  res.write('G ' + print.board.g.join('  ') + '\n');
+  res.write('H ' + print.board.h.join('  ') + '\n');
+  res.write('I ' + print.board.i.join('  ') + '\n');
+  res.write('J ' + print.board.j.join('  ') + '\n');
   res.end();
 });
 
