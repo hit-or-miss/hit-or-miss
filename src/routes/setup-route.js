@@ -12,6 +12,8 @@ import error from '../middleware/404.js';
 setupRouter.get('/setup', auth(), async (req, res) => {
   let userData = await Board.find({ type: 'primary', player: req.user._id });
 
+  console.log(req.user.type);
+
   // If user already has a board setup, render that board
   if (userData.length > 0) {
     let data = await Board.find({ type: 'primary', player: req.user._id });
