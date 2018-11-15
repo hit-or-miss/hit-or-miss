@@ -324,6 +324,18 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   res.write('H ' + print.board.h.join('  ') + '\n');
   res.write('I ' + print.board.i.join('  ') + '\n');
   res.write('J ' + print.board.j.join('  ') + '\n');
+
+  // This will alert the user when they have successfully placed all 5 of their ships. That is when they should proceed to play the game.
+
+  let shipCheck = await Ship.find({ player: req.user._id });
+  for (let i = 0; i < shipCheck.length; i++) {
+    if (shipCheck[i].location.length === 0) {
+      break;
+    }
+    else if (i === shipCheck.length - 1) {
+      res.write('You are ready to play!');
+    }
+  }
   res.end();
 });
 
