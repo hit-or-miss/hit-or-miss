@@ -187,8 +187,8 @@ describe('Setup Routes', () => {
         });
     
       const placeShip = await mockRequest.get('/setup/A-B4-R').auth('foo', 'bar');
-      expect(placeShip.text).toContain('    1  2  3  4  5  6  7  8  9  10');
-      expect(placeShip.text).toContain('B            A  A  A  A  A');
+      expect(placeShip.text).toContain('  1  2  3  4  5  6  7  8  9  10');
+      expect(placeShip.text).toContain('B ~  ~  ~  A  A  A  A  A');
     });
 
     it('should poplulate the board with the ships location when ships direction is right', async () => {
@@ -210,7 +210,7 @@ describe('Setup Routes', () => {
 
       const placeShip = await mockRequest.get('/setup/A-J1-R').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoA._id);
-      expect(updatedShip.location[3]).toBe('j4');
+      expect(updatedShip.location[3]).toBe('j3');
       });
 
     it('should poplulate the board with the ships location when ships direction is left', async () => {
@@ -232,7 +232,7 @@ describe('Setup Routes', () => {
 
       const placeShip = await mockRequest.get('/setup/C-B8-L').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoC._id);
-      expect(updatedShip.location[1]).toBe('b7');
+      expect(updatedShip.location[1]).toBe('b6');
     });
 
     it('should poplulate the board with the ships location when ships direction is up', async () => {
@@ -254,7 +254,7 @@ describe('Setup Routes', () => {
 
       const placeShip = await mockRequest.get('/setup/B-J8-U').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoB._id);
-      expect(updatedShip.location[1]).toBe('h8');
+      expect(updatedShip.location[1]).toBe('h7');
     });
 
     it('should poplulate the board with the ships location when ships direction is down', async () => {
@@ -276,7 +276,7 @@ describe('Setup Routes', () => {
 
       const placeShip = await mockRequest.get('/setup/D-C1-D').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoD._id);
-      expect(updatedShip.location[1]).toBe('d1');
+      expect(updatedShip.location[1]).toBe('d0');
     });
 
     it('should poplulate the board with the ships location when ships direction is down', async () => {
@@ -298,7 +298,7 @@ describe('Setup Routes', () => {
 
       const placeShip = await mockRequest.get('/setup/S-C1-D').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoS._id);
-      expect(updatedShip.location[0]).toBe('c1');
+      expect(updatedShip.location[0]).toBe('c0');
     });
   });
 });
