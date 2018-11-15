@@ -2,38 +2,48 @@
 
 import fs from 'fs';
 
-// import test from './../assets/welcome.txt';
-
 const welcome = () => {
   return fs.readFileSync(`${__dirname}/../assets/welcome.txt`).toString();
 };
 
-// const welcome = () => { return 'Hello World'; };
+const rules = () => {
+  return fs.readFileSync(`${__dirname}/../assets/rules.txt`).toString();
+};
 
-const rules = () => { };
+const help = () => {
+  return fs.readFileSync(`${__dirname}/../assets/help.txt`).toString();
+};
 
-const help = () => { };
+const setupHelp = () => {
+  return fs.readFileSync(`${__dirname}/../assets/setup-help.txt`).toString();
+};
 
-const setupHelp = () => { };
+const playHelp = () => {
+  return fs.readFileSync(`${__dirname}/../assets/play-help.txt`).toString();
+};
 
-const targetHelp = () => { };
+const hit = () => {
+  return fs.readFileSync(`${__dirname}/../assets/hit.txt`).toString();
+};
 
-const hit = () => { };
+const miss = () => {
+  return fs.readFileSync(`${__dirname}/../assets/miss.txt`).toString();
+};
 
-const miss = () => { };
+const win = () => {
+  return fs.readFileSync(`${__dirname}/../assets/win.txt`).toString();
+};
 
-const win = () => { };
-
-const lose = () => { };
-
-
+const lose = () => {
+  return fs.readFileSync(`${__dirname}/../assets/lose.txt`).toString();
+};
 
 export default {
   welcome,
   rules,
   help,
   setupHelp,
-  targetHelp,
+  playHelp,
   hit,
   miss,
   win,
