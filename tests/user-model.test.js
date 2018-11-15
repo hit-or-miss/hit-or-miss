@@ -16,7 +16,7 @@ describe('Test the User Model', () => {
   it('should create a new user model', async () => {
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
 
@@ -28,7 +28,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
     const foundUser = await User.findById(user._id);
@@ -64,7 +64,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     await User.create(userInfo);
 
@@ -83,7 +83,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
 
@@ -101,7 +101,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
 
@@ -115,7 +115,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
 
@@ -129,7 +129,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     await User.create(userInfo);
 
@@ -143,7 +143,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     await User.create(userInfo);
 
@@ -158,7 +158,7 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
     const user = await User.create(userInfo);
 
@@ -173,9 +173,9 @@ describe('Test the User Model', () => {
 
     const computer = await User.create(compInfo);
 
-    const userInfo = { username: 'foo', email: 'foo@bar.com', password: 'foobar', role: 'user', opponent: computer._id };
+    const userInfo = { username: 'foo', password: 'foobar', role: 'user', opponent: computer._id };
 
-    const user = await User.create(userInfo);
+    await User.create(userInfo);
 
     const token = 'thisisnot.thetokenyourelookingfor.movealongnow';
 

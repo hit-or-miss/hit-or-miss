@@ -50,4 +50,5 @@ TBD
 * Code Fellows: JB Tellez, Allie Grampa, Ashton Ellis
 
 ### Resources
-* 
+* [ASCII generator](http://patorjk.com/software/taag/#p=display&f=Colossal&t=Hit%20or%20Miss!).
+

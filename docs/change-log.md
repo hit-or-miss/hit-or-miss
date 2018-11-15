@@ -34,11 +34,11 @@ The following change-log is part of the Team !ASYNC 401 JavaScript midterm proje
 
 
 #### 11-14-2018
-
+* (EP,KC,GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 
 
 
 #### 11-15-2018
-
+* (EP) - Completed tests for setup-routes.test.js, coverage = 97%
 
 
 #### 11-16-2018
