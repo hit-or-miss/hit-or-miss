@@ -10,7 +10,6 @@ import supergoose, { startDB, stopDB } from './supergoose.js';
 import User from '../src/models/user-model.js';
 import Board from '../src/models/board-model.js';
 import Ship from '../src/models/ship-model.js';
-import { finished } from 'stream';
 
 const { app } = require('../src/app.js');
 const mockRequest = supergoose(app);
