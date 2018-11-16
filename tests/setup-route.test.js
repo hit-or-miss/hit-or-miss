@@ -9,7 +9,7 @@ import supergoose, { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
 import Board from '../src/models/board-model.js';
-import Ship from '../src/models/ship-model.js';
+import Ship from '../src/models/ship-model.js'; 
 
 const { app } = require('../src/app.js');
 const mockRequest = supergoose(app);
@@ -29,10 +29,38 @@ describe('Setup Routes', () => {
 
   describe('/setup', () => {
 
+    it('should delete and create a "Computer" user', async () => {
+      await User.create( {username: 'foo', password: 'bar'});
+      await mockRequest.get('/setup').auth('foo', 'bar');
+      const computer = await User.findOne({ username: 'Computer' });
+      expect( computer.username ).toBe('Computer');
+    });
+
+    it('should create a Fleet of ships for the "Computer" user', async () => {
+      await User.create( {username: 'foo', password: 'bar'});
+      await mockRequest.get('/setup').auth('foo', 'bar');
+      const computer = await User.findOne({ username: 'Computer' });
+
+      const computerShips = await Ship.find({ player: computer._id });
+      for(let i = 0; i<computerShips.length; i++){
+        expect(computerShips[i].player).toEqual(computer._id);
+      }
+    });
+
+    it('should create Boards for the "Computer" user', async () => {
+      await User.create( {username: 'foo', password: 'bar'});
+      await mockRequest.get('/setup').auth('foo', 'bar');
+      const computer = await User.findOne({ username: 'Computer' });
+
+      const computerBoards = await Board.find({ player: computer._id });
+      for(let i = 0; i<computerBoards.length; i++){
+        expect(computerBoards[i].player).toEqual(computer._id);
+      }
+    });
+
     it('should return a 200 status code if url is valid', async () => {
 
-      const userInfo = await User.create( {username: 'foo', password: 'bar',
-      });
+      await User.create( {username: 'foo', password: 'bar'});
 
       const response = await mockRequest.get('/setup').auth('foo', 'bar');
       expect(response.status).toBe(200);
@@ -40,8 +68,7 @@ describe('Setup Routes', () => {
 
     it('should return a 404 error if the url is invalid', async () => {
 
-      const userInfo = await User.create( {username: 'foo', password: 'bar',
-      });
+      await User.create( {username: 'foo', password: 'bar'});
 
       const response = await mockRequest.get('/setdown').auth('foo', 'bar');
       expect(response.status).toBe(404);
@@ -50,21 +77,11 @@ describe('Setup Routes', () => {
     it('should correctly associate a player id with a ship id', async () => {
 
 
-        const userInfo = await User.create( {username: 'foo', password: 'bar',
+      const userInfo = await User.create( {username: 'foo', password: 'bar',
       });
       const shipInfoA = await Ship.create( {name: 'A', size: 5, location:['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create( {name: 'B', size: 4, location:['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
-      });
-      const shipInfoC = await Ship.create( {name: 'C', size: 3, location:['d3', 'd4', 'd5', 'd6', 'd7'],player: userInfo._id,
-      });
-      const shipInfoD = await Ship.create( {name: 'D',size: 2, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
-      });
-      const shipInfoS = await Ship.create( {name: 'S', size: 1, location:['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
-      });
-      const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
-      });
-      const response = await mockRequest.get('/setup').auth('foo', 'bar');
+      await mockRequest.get('/setup').auth('foo', 'bar');
 
       expect(shipInfoA.player).toEqual(userInfo._id);
     });
@@ -76,7 +93,7 @@ describe('Setup Routes', () => {
 
       const boardInfo = await Board.create({type: 'primary', player: userInfo._id,
       });
-      const response = await mockRequest.get('/setup').auth('foofoo', 'foobar');
+      await mockRequest.get('/setup').auth('foofoo', 'foobar');
 
       expect(boardInfo.player).toEqual(userInfo._id);
     });

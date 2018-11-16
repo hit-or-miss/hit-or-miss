@@ -2,15 +2,34 @@ import express from 'express';
 
 const setupRouter = express.Router();
 
+import User from '../models/user-model.js';
 import Board from '../models/board-model.js';
 import Ship from '../models/ship-model.js';
 import auth from '../middleware/auth.js';
 import error400 from '../middleware/400.js';
 import error from '../middleware/404.js';
 
+// Importing a way to create a Computer user and all ships and boards asscoiated with said user
+import createComputerUser from '../generator/computer-user.js';
+import Fleet from '../generator/computer-fleet.js';
+import Boards from'../generator/computer-boards.js';
+
 // Clearing our tracking board and the array with the previous hits whenever the "/setup" path is used.
 
 setupRouter.get('/setup', auth(), async (req, res) => {
+  
+  // Finds the User with a username of "Computer" and DELETEs it
+  await User.findOneAndDelete({ username: 'Computer' });
+  // Creates a user called "Computer"
+  const computer = await createComputerUser();
+  // Creates a fleet of ships for the "Computer"
+  const fleet = new Fleet(computer);
+  await fleet.init();
+  // Creates BOTH boards for the "Computer"
+  const boards = new Boards(computer);
+  await boards.init();
+
+
   await Board.findOneAndUpdate({ type: 'tracking', player: req.user._id}, { board: {
     a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
     b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
