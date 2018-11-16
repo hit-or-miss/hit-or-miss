@@ -21,8 +21,17 @@ THE GAME WHERE YOU GET TO LEAD YOUR SHIPS TO VICTORY!
 NEW USER: 
 POST hitormiss.fun/signup username=<username> password=<pass>
 
-RULES:  GET hitormiss.fun/rules
-START:  GET hitormiss.fun/setup
-HELP:   GET hitormiss.fun/help
+RULES:  
+GET hitormiss.fun/rules
 
-You can add HELP during setup or game play for context sensitive help. (E.G. GET hitormiss.fun/setuphelp)
+START:  
+GET hitormiss.fun/setup
+
+GENERAL HELP:   
+GET hitormiss.fun/help
+
+SETUP HELP: 
+GET hitormiss.fun/setuphelp
+
+PLAY HELP:  
+GET hitormiss.fun/playhelp

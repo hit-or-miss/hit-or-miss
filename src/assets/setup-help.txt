@@ -17,7 +17,7 @@ GET hitormiss.fun/setup/<syntax>
 Syntax: <ship>-<start>-<direction>	
 SHIP – A, B, C, S, D
 START – <row><column>
-DIRECTION – (R)ight | (L)eft | (U)p | (D)own | (M)ove
+DIRECTION – (R)ight | (L)eft | (U)p | (D)own 
 
 Examples:
 - B-B6-R  -> Place the battleship starting at B6 traveling right
@@ -28,9 +28,7 @@ Examples:
 
 - S-H7-U  -> Place the Submarine starting at H7 traveling up
 
-- D-I8-L  -> Place the Destroyer starting at B6 traveling to the right
-
-->  D-I8-M  Remove the Destroyer from the board
+- D-I8-L  -> Place the Destroyer starting at I8 traveling to the left
 
 You may recall these instructions using 
 GET hitormiss.fun/setuphelp
