@@ -4,7 +4,7 @@ import { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
 import createComputerUser from '../src/generator/computer-user.js';
-import CompShips from '../src/generator/computer-ships.js';
+import Fleet from '../src/generator/computer-fleet.js';
 import CompBoards from '../src/generator/computer-boards.js';
 
 
@@ -18,7 +18,7 @@ beforeEach(async () => {
 
 describe('Testing the CompUser Generation', () => {
 
-  it('should create a new user called "CompUser"', async () => {
+  xit('should create a new user called "CompUser"', async () => {
     const computer = await createComputerUser();
     console.log('THIS IS THE COMPUTER',computer);
     console.log('THIS IS THE COMPUTER',computer._id);
@@ -27,15 +27,21 @@ describe('Testing the CompUser Generation', () => {
   });
 
   it('should create an "Aircraft Carrier" referencing the User "CompUser"', async () => {
-    const computer = await CompShips.computerUser;
-    console.log('THIS IS THE COMPUTER',computer);
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    // const ac = await fleet.init();
+    // const bs = await fleet.bs();
+    
     // console.log('THIS IS THE COMPUTER',computer._id);
-    const A = await CompShips.aircraftCarrier;
-    console.log(A);
-    console.log(A);
-    console.log(A);
-    console.log(A);
-    expect(A.player).toBeDefined();
+    // const A = await CompShips.aircraftCarrier();
+    // console.log(fleet.user);
+    // console.log('A');
+    // expect(ac.player).toBe(bs.player);
+    await fleet.init();
+    console.log(fleet.ac);
+    console.log(fleet.ac);
+    console.log(fleet.ac);
+    expect(fleet.ac).toBeDefined();
   });
 
   xit('should create an "Battleship" referencing the User "CompUser"', async () => {
