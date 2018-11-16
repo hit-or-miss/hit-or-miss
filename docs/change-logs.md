@@ -23,6 +23,8 @@
 * (DC) - Completed tests for middleware (98.11%), models (94.12%), user-route.js (100%).	
  #### 11-14-2018	
 * (EP,KC,GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 	
+* (DC) Helped with targeting algorithm, created filed and module to render user text information for a basic UX.
+
  #### 11-15-2018	
 * (EP) - Completed tests for setup-routes.test.js, coverage = 97%	
  #### 11-16-2018

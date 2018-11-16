@@ -36,6 +36,7 @@ module.exports = {
   app,
   start: (port) => {
     server = app.listen(port, () => console.log(`HIT-OR-MISS SERVER Listening on PORT: ${port}`));
+    return server;
   },
   stop: () => {
     server.close(() => {
