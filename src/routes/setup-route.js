@@ -13,11 +13,15 @@ import error from '../middleware/404.js';
 import createComputerUser from '../generator/computer-user.js';
 import Fleet from '../generator/computer-fleet.js';
 import Boards from'../generator/computer-boards.js';
+import userText from '../middleware/user-text.js';
 
 // Clearing our tracking board and the array with the previous hits whenever the "/setup" path is used.
 
 setupRouter.get('/setup', auth(), async (req, res) => {
   
+  const setupHelpText = userText.setupHelp();
+  res.write(setupHelpText);
+
   // Finds the User with a username of "Computer" and DELETEs it
   await User.findOneAndDelete({ username: 'Computer' });
   // Creates a user called "Computer"
@@ -52,7 +56,8 @@ setupRouter.get('/setup', auth(), async (req, res) => {
 
   if (userData.length > 0) {
     let data = await Board.find({ type: 'primary', player: req.user._id });
-
+    res.write('\n');
+    res.write('PRIMARY BOARD\n');
     res.write('    1  2  3  4  5  6  7  8  9  10\n');
     res.write('A   ' + data[0].board.a.join('  ') + '\n');
     res.write('B   ' + data[0].board.b.join('  ') + '\n');
@@ -72,8 +77,8 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     await Ship.create({ name: 'A', size: 5, player: req.user._id });
     await Ship.create({ name: 'B', size: 4, player: req.user._id });
     await Ship.create({ name: 'C', size: 3, player: req.user._id });
-    await Ship.create({ name: 'D', size: 3, player: req.user._id });
     await Ship.create({ name: 'S', size: 3, player: req.user._id });
+    await Ship.create({ name: 'D', size: 2, player: req.user._id });
     
     await Board.create({type: 'tracking', player: req.user._id, board: {
       a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -103,7 +108,8 @@ setupRouter.get('/setup', auth(), async (req, res) => {
       i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
     }});
-
+    res.write('\n');
+    res.write('PRIMARY BOARD\n');
     res.write('  1  2  3  4  5  6  7  8  9  10\n');
     res.write('A ' + print.board.a.join('  ') + '\n');
     res.write('B ' + print.board.b.join('  ') + '\n');
@@ -150,7 +156,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
     let startNum = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
     if (startNum + size > 10) {
-      res.write('Bad request\n\n');
+      res.write('Please place your ship on the board\n\n');
     }
     else {
       for (let i = startNum; i < startNum + size; i++) {
@@ -181,7 +187,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
     let startNum = parseInt(initialLocation.slice(1)) - 1;
     let row = initialLocation[0].toLowerCase();
     if (startNum - size < -1) {
-      res.write('Bad request\n\n');
+      res.write('Please place your ship on the board\n\n');
     }
     else {
       for (let i = startNum - size + 1; i <= startNum; i++) {
@@ -214,7 +220,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
     let rowArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
     let startIndex = rowArray.findIndex(x => x === row);
     if (startIndex + size > 10) {
-      res.write('Bad request\n\n');
+      res.write('Please place your ship on the board\n\n');
     }
     else {
       for (let i = startIndex; i < startIndex + size; i++) {
@@ -247,7 +253,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
     let rowArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
     let startIndex = rowArray.findIndex(x => x === row);
     if (startIndex - size < -1) {
-      res.write('Bad request\n\n');
+      res.write('Please place your ship on the board\n\n');
     }
     else {
       for (let i = startIndex - size + 1; i <= startIndex; i++) {
@@ -353,7 +359,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
 
   let print = await Board.findOneAndUpdate({ type: 'primary', player: req.user._id },
     { board: primary.board }, { new: true });
-
+  res.write('PRIMARY BOARD\n');
   res.write('  1  2  3  4  5  6  7  8  9  10\n');
   res.write('A ' + print.board.a.join('  ') + '\n');
   res.write('B ' + print.board.b.join('  ') + '\n');
@@ -374,7 +380,9 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
       break;
     }
     else if (i === shipCheck.length - 1) {
-      res.write('You are ready to play!');
+      res.write('\n');
+      res.write('You are ready to play!\n');
+      res.write('START:  GET hitormiss.fun/play');
     }
   }
   res.end();
