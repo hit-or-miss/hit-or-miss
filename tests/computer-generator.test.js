@@ -4,8 +4,8 @@ import { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
 import createComputerUser from '../src/generator/computer-user.js';
-import CompShips from '../src/generator/computer-ships.js';
-import CompBoards from '../src/generator/computer-boards.js';
+import Fleet from '../src/generator/computer-fleet.js';
+import Boards from '../src/generator/computer-boards.js';
 
 
 beforeAll(startDB);
@@ -16,54 +16,66 @@ beforeEach(async () => {
   await User.deleteMany({});
 });
 
-describe('Testing the CompUser Generation', () => {
+describe('Testing the computer-user.js file', () => {
 
-  it('should create a new user called "CompUser"', async () => {
+  it('should create a new user called "Computer"', async () => {
     const computer = await createComputerUser();
-    console.log('THIS IS THE COMPUTER',computer);
-    console.log('THIS IS THE COMPUTER',computer._id);
-
     expect( computer.username ).toBe('Computer');
   });
 
+});
+
+describe('Tesing the computer-fleet.js', () => {
+
   it('should create an "Aircraft Carrier" referencing the User "CompUser"', async () => {
-    const computer = await CompShips.computerUser;
-    console.log('THIS IS THE COMPUTER',computer);
-    // console.log('THIS IS THE COMPUTER',computer._id);
-    const A = await CompShips.aircraftCarrier;
-    console.log(A);
-    console.log(A);
-    console.log(A);
-    console.log(A);
-    expect(A.player).toBeDefined();
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    await fleet.init();
+    expect( fleet.aircraftCarrier.player ).toBe( user._id );
   });
 
-  xit('should create an "Battleship" referencing the User "CompUser"', async () => {
-    const computer = await CompUser.computer;
-    const B = await CompUser.battlship;
-    console.log(B);
-    expect(B.player).toBe('B');
+  it('should create an "Battleship" referencing the User "CompUser"', async () => {
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    await fleet.init();
+    expect( fleet.battleship.player ).toBe( user._id );
   });
 
-  xit('should create an "Cruiser" referencing the User "CompUser"', async () => {
-    const computer = await CompUser.computer;
-    const C = await CompUser.cruiser;
-    console.log(C);
-    expect(C.player).toBe('C');
+  it('should create an "Cruiser" referencing the User "CompUser"', async () => {
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    await fleet.init();
+    expect( fleet.cruiser.player ).toBe( user._id );
   });
 
-  xit('should create an "Destroyer" referencing the User "CompUser"', async () => {
-    const computer = await CompUser.computer;
-    const D = await CompUser.destroyer;
-    console.log(D);
-    expect(D.player).toBe('D');
+  it('should create an "Destroyer" referencing the User "CompUser"', async () => {
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    await fleet.init();
+    expect( fleet.destroyer.player ).toBe( user._id );
   });
 
-  xit('should create an "Submarine" referencing the User "CompUser"', async () => {
-    const computer = await CompUser.computer;
-    const S = await CompUser.submarine;
-    console.log(S);
-    expect(S.player).toBe('S');
+  it('should create an "Submarine" referencing the User "CompUser"', async () => {
+    const user = await createComputerUser();
+    const fleet = new Fleet(user);
+    await fleet.init();
+    expect( fleet.submarine.player ).toBe( user._id );
+  });
+});
+
+describe('Testing the computer-boards.js file', () => {
+
+  it('should create new Boards refering to the Computer user', async () => {
+    const user = await createComputerUser();
+    const boards = new Boards(user);
+    await boards.init();
+    expect (boards.trackingBoard.player ).toBe( user._id );
   });
 
+  it('should create new Boards refering to the Computer user', async () => {
+    const user = await createComputerUser();
+    const boards = new Boards(user);
+    await boards.init();
+    expect( boards.primaryBoard.player ).toBe( user._id );
+  });
 });
