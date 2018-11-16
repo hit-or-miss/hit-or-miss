@@ -107,6 +107,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
             const winText = userText.win();
             response.write(winText);
             response.end();
+            return;
           }
         }
         // If there is a hit, it will render an X on the tracking board, if it's a miss then it will render an O.
@@ -186,6 +187,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
           const loseText = userText.lose();
           response.write(loseText);
           response.end();
+          return;
         }
       }
       // If there is a hit, it will render an X on the primary board, if it's a miss then it will render an O.
