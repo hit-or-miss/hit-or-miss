@@ -5,6 +5,7 @@ import express from 'express';
 
 import userRouter from './routes/user-route.js';
 import setupRouter from './routes/setup-route.js';
+// import Ship from './routes/setup-route.js';
 
 import gameRouter from './routes/game-route.js';
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Process incoming through the routers
 app.use(userRouter);
 app.use(setupRouter);
+// app.use(Ship);
 app.use(gameRouter);
 
 //use local middleware
