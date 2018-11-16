@@ -8,6 +8,7 @@ import auth from '../middleware/auth.js';
 import error400 from '../middleware/400.js';
 import error from '../middleware/404.js';
 
+// Clearing our tracking board and the array with the previous hits whenever the "/setup" path is used.
 
 setupRouter.get('/setup', auth(), async (req, res) => {
   await Board.findOneAndUpdate({ type: 'tracking', player: req.user._id}, { board: {
@@ -23,15 +24,15 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   }, pastHits: [],
   });
+
+  // Checking if the player already has a primary board.
+
   let userData = await Board.find({ type: 'primary', player: req.user._id });
 
-  console.log(req.user.type);
+  // If user already has a board, this will render that pre-existing board.
 
-  // If user already has a board setup, render that board
   if (userData.length > 0) {
     let data = await Board.find({ type: 'primary', player: req.user._id });
-
-    // FIXME: David - Should we create a header row as part of the model so we can always be lined up?
 
     res.write('    1  2  3  4  5  6  7  8  9  10\n');
     res.write('A   ' + data[0].board.a.join('  ') + '\n');
@@ -46,14 +47,15 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     res.write('J   ' + data[0].board.j.join('  ') + '\n');
     res.end();
   }
+  // If the user doesn't already have a board, this will create brand new ships for the user, new tracking board, and primary board.
+
   else if (userData.length === 0) {
     await Ship.create({ name: 'A', size: 5, player: req.user._id });
     await Ship.create({ name: 'B', size: 4, player: req.user._id });
     await Ship.create({ name: 'C', size: 3, player: req.user._id });
     await Ship.create({ name: 'D', size: 3, player: req.user._id });
     await Ship.create({ name: 'S', size: 3, player: req.user._id });
-    //render a new board
-
+    
     await Board.create({type: 'tracking', player: req.user._id, board: {
       a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
       b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -67,6 +69,9 @@ setupRouter.get('/setup', auth(), async (req, res) => {
       j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
     }, pastHits: [],
     });
+
+    // This prints the primary board to the user.
+
     let print = await Board.create({type: 'primary', player: req.user._id, board: {
       a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
@@ -79,6 +84,7 @@ setupRouter.get('/setup', auth(), async (req, res) => {
       i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
     }});
+
     res.write('  1  2  3  4  5  6  7  8  9  10\n');
     res.write('A ' + print.board.a.join('  ') + '\n');
     res.write('B ' + print.board.b.join('  ') + '\n');
@@ -95,10 +101,13 @@ setupRouter.get('/setup', auth(), async (req, res) => {
   }
 });
 
-setupRouter.get('/setup/:place', auth(), async (req, res) => {
+// When the user is placing a ship onto the primary board :
+
+setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
   let placeArray = req.params.place.split('-');
 
-  //handling an incorrect ship input value
+  // The user will choose A, B, C, D, and S for the ship types and handle incorrect types.
+
   if (placeArray[0] !== 'A' && placeArray[0] !== 'B' && placeArray[0] !== 'C' && placeArray[0] !== 'D' && placeArray[0] !== 'S') {
     error(req, res);
     return;
@@ -108,13 +117,15 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
   let size = ship.size;
   ship.location = [];
 
-  //handling an incorrect direction input
+  // This will handle an invalid direction for the ships to be placed.
+
   if (placeArray[2] !== 'R' && placeArray[2] !== 'L' && placeArray[2] !== 'U' && placeArray[2] !== 'D') {
     error400(req, res);
     return;
   }
 
-  // Update ship location array with coordinates going right
+  // This will update the ship's location in the array with the coordinates going to the right.
+
   if (placeArray[2] === 'R') {
     let initialLocation = placeArray[1];
     let startNum = parseInt(initialLocation.slice(1)) - 1;
@@ -144,7 +155,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Update ship location array with coordinates going left
+  // This will update the ship's location in the array with the coordinates going to the left.
+
   if (placeArray[2] === 'L') {
     let initialLocation = placeArray[1];
     let startNum = parseInt(initialLocation.slice(1)) - 1;
@@ -174,7 +186,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Update ship location array with coordinates going down
+  // This will update the ship's location in the array with the coordinates going down.
+
   if (placeArray[2] === 'D') {
     let initialLocation = placeArray[1];
     let num = parseInt(initialLocation.slice(1)) - 1;
@@ -206,7 +219,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Update ship location array with coordinates going up
+  // This will update the ship's location in the array with the coordinates going up.
+
   if (placeArray[2] === 'U') {
     let initialLocation = placeArray[1];
     let num = parseInt(initialLocation.slice(1)) - 1;
@@ -238,7 +252,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Clear the primary board before placing the ships
+  // This will clear the primary board before placing the ships the user has just chosen.
 
   let primary = await Board.findOneAndUpdate({type:'primary', player:req.user._id},
     { board: {
@@ -254,7 +268,10 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
       j: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
     } }, { new: true });
 
-  // Find aircraft carrier location and place it on primary board
+  // Now begins the placing of the user's ships on the cleared out primary board before gameplay :
+
+  // This finds the user's aircraft carrier location and places it on primary board.
+
   let shipA = await Ship.findOne({ name: 'A', player: req.user._id });
   let locationA = shipA.location;
   if (locationA.length > 0) {
@@ -265,7 +282,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Find battleship location and place it on primary board
+  // This finds the user's battleship location and places it on primary board.
+
   let shipB = await Ship.findOne({ name: 'B', player: req.user._id });
   let locationB = shipB.location;
   if (locationB.length > 0) {
@@ -276,7 +294,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Find cruiser location and place it on primary board
+  // This finds the user's cruiser location and places it on primary board.
+
   let shipC = await Ship.findOne({ name: 'C', player: req.user._id });
   let locationC = shipC.location;
   if (locationC.length > 0) {
@@ -287,7 +306,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Find destroyer location and place it on primary board
+  // This finds the user's destroyer location and places it on primary board.
+
   let shipD = await Ship.findOne({ name: 'D', player: req.user._id });
   let locationD = shipD.location;
   if (locationD.length > 0) {
@@ -298,7 +318,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Find submarine location and place it on primary board
+  // This finds the user's submarine location and places it on primary board.
+
   let shipS = await Ship.findOne({ name: 'S', player: req.user._id });
   let locationS = shipS.location;
   if (locationS.length > 0) {
@@ -309,7 +330,8 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => {
     }
   }
 
-  // Render the board for the user to see
+  // This will render the primary board for the user to see.
+
   let print = await Board.findOneAndUpdate({ type: 'primary', player: req.user._id },
     { board: primary.board }, { new: true });
 
