@@ -38,6 +38,14 @@ const lose = () => {
   return fs.readFileSync(`${__dirname}/../assets/lose.txt`).toString();
 };
 
+const playerSunk = () => {
+  return fs.readFileSync(`${__dirname}/../assets/player-sunk.txt`).toString();
+};
+
+const computerSunk = () => {
+  return fs.readFileSync(`${__dirname}/../assets/opponent-sunk.txt`).toString();
+};
+
 export default {
   welcome,
   rules,
@@ -48,5 +56,7 @@ export default {
   miss,
   win,
   lose,
+  playerSunk,
+  computerSunk,
 };
 

@@ -1,6 +1,8 @@
 'use strict';
 import mongoose from 'mongoose';
 
+// This is the schema for the board model.
+
 const boardSchema = new mongoose.Schema({
   type: { type: String, required: true },
   board: {

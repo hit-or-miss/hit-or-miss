@@ -4,14 +4,21 @@ const authRouter = express.Router();
 
 import User from '../models/user-model.js';
 import auth from '../middleware/auth.js';
-// FIXME: Not sure we need this here
-// import error from '../middleware/error.js';
+import userText from '../middleware/user-text.js';
 
 authRouter.post('/signup', (req, res, next) => {
+
   User.create(req.body)
     .then((user) => {
+
+      const welcomeText = userText.welcome();
+      res.write(welcomeText);
+
       req.token = user.generateToken();
-      res.send(req.token);
+      res.write(`\n\nToken for Bearer Authorization: \n\n ${req.token} `);
+
+      res.end();
+
     }).catch(err => {
       err = { status: 400, statusMessage: 'Bad Request' };
       next(err);
@@ -19,8 +26,8 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.post('/signin', auth(), (req, res) => {
-  res.write('HIT OR MISS\n');
-  res.write('Please make a GET request to /setup to place your ships\n');
+  const welcomeText = userText.welcome();
+  res.write(welcomeText);
   res.end();
 });
 

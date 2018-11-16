@@ -5,9 +5,8 @@ import express from 'express';
 
 import userRouter from './routes/user-route.js';
 import setupRouter from './routes/setup-route.js';
-// import Ship from './routes/setup-route.js';
-
 import gameRouter from './routes/game-route.js';
+import helpRouter from './routes/help-route.js';
 
 import auth from './middleware/auth.js';
 import notFound from './middleware/404.js';
@@ -22,8 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 // Process incoming through the routers
 app.use(userRouter);
 app.use(setupRouter);
-// app.use(Ship);
 app.use(gameRouter);
+app.use(helpRouter);
 
 //use local middleware
 app.use(notFound);
@@ -36,6 +35,7 @@ module.exports = {
   app,
   start: (port) => {
     server = app.listen(port, () => console.log(`HIT-OR-MISS SERVER Listening on PORT: ${port}`));
+    return server;
   },
   stop: () => {
     server.close(() => {

@@ -2,6 +2,8 @@ import { startDB, stopDB } from './supergoose.js';
 
 import User from '../src/models/user-model.js';
 
+// process.env.APP_SECRET = 'YOUVEJUSTBEENGERKD';
+
 beforeAll(startDB);
 afterAll(stopDB);
 
@@ -73,7 +75,7 @@ describe('Test the User Model', () => {
         await User.create({ username: 'foo', password: 'bar' });
       } catch (error) {
 
-        expect(error.message).toEqual(expect.stringContaining('E11000 duplicate key error dup key'));
+        expect(error.message).toEqual(expect.stringContaining('E11000 duplicate key error'));
       }
     }
 

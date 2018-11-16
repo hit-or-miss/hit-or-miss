@@ -2,15 +2,18 @@
 
 GENERAL HELP INFORMATION
 
-Hit or Miss is designed to be played using the command line or equivalent that allows you to make HTTP requests (e.g. GET or POST).
+Hit or Miss is designed to be played using the command line or 
+equivalent that allows you to make HTTP requests (e.g. GET or POST).
 
-We recommend using either HTTPie found at https://httpie.org/ or POSTMAN found at https://www.getpostman.com/.  Other similar 
+We recommend using either HTTPie found at https://httpie.org/ 
+or POSTMAN found at https://www.getpostman.com/.  Other similar 
 options exist, but have not been tested.
 
 SAMPLE HTTPie request:  
   * HTTP -a username:password GET hitormiss.fun/rules
 
-Basic authentication with a <username> and <password> is needed to play.
+Basic authentication with a <username> and <password> is needed 
+to play.
 
 Create NEW User: POST hitormiss.fun/signup
 
@@ -19,9 +22,7 @@ RETURNING Users should use the same username and password
 
 RULES: GET hitormiss.fun/rules
 
-START a Game:  GET hitormiss.fun/START
+START a Game:  GET hitormiss.fun/setup
 
 ==============================================================
-
-
 
