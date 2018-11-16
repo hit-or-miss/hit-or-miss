@@ -15,7 +15,8 @@ start the game by placing the ships in your armada around your
 PRIMARY playing board. Instructions for placing your ships can 
 be found at: GET hitormiss.fun/setuphelp.
 
-You will attack the enemy by shooting your missiles at their ships.  Targeting instructions can be found at:
+You will attack the enemy by shooting your missiles at their ships.
+Targeting instructions can be found at:
 GET hitormiss.fun/playhelp.
 
 ================================================================
