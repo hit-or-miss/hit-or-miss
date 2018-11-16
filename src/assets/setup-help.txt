@@ -1,6 +1,6 @@
 =========================================
 
-You're armada includes the following ships
+Your armada includes the following ships
 
    Type of Ship           Health
 ---------------------     -------    
@@ -31,5 +31,8 @@ Examples:
 - D-I8-L  -> Place the Destroyer starting at B6 traveling to the right
 
 ->  D-I8-M  Remove the Destroyer from the board
+
+You may recall these instructions using 
+GET hitormiss.fun/setuphelp
 
 =========================================

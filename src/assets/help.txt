@@ -19,9 +19,7 @@ RETURNING Users should use the same username and password
 
 RULES: GET hitormiss.fun/rules
 
-START a Game:  GET hitormiss.fun/START
+START a Game:  GET hitormiss.fun/setup
 
 ==============================================================
-
-
 

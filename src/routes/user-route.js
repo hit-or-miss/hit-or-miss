@@ -6,7 +6,6 @@ import User from '../models/user-model.js';
 import auth from '../middleware/auth.js';
 import userText from '../middleware/user-text.js';
 
-
 authRouter.post('/signup', (req, res, next) => {
 
   User.create(req.body)
@@ -27,8 +26,8 @@ authRouter.post('/signup', (req, res, next) => {
 });
 
 authRouter.post('/signin', auth(), (req, res) => {
-  res.write('HIT OR MISS\n');
-  res.write('Please make a GET request to /setup to place your ships\n');
+  const welcomeText = userText.welcome();
+  res.write(welcomeText);
   res.end();
 });
 

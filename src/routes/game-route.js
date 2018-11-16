@@ -8,6 +8,45 @@ import User from '../models/user-model.js';
 import Ship from '../models/ship-model.js';
 import Board from '../models/board-model.js';
 import auth from '../middleware/auth';
+import userText from '../middleware/user-text.js';
+
+// This will display play specific help text for the user to read
+
+fireRouter.get('/play', auth(), async (request, response) => {
+  const playHelpText = userText.playHelp();
+  response.write(playHelpText);
+
+  let tracking = await Board.findOne({ type: 'tracking', player: request.user._id });
+
+  response.write('TRACKING BOARD\n');
+  response.write('  1  2  3  4  5  6  7  8  9  10\n');
+  response.write('A ' + tracking.board.a.join('  ') + '\n');
+  response.write('B ' + tracking.board.b.join('  ') + '\n');
+  response.write('C ' + tracking.board.c.join('  ') + '\n');
+  response.write('D ' + tracking.board.d.join('  ') + '\n');
+  response.write('E ' + tracking.board.e.join('  ') + '\n');
+  response.write('F ' + tracking.board.f.join('  ') + '\n');
+  response.write('G ' + tracking.board.g.join('  ') + '\n');
+  response.write('H ' + tracking.board.h.join('  ') + '\n');
+  response.write('I ' + tracking.board.i.join('  ') + '\n');
+  response.write('J ' + tracking.board.j.join('  ') + '\n\n');
+
+  let primary = await Board.findOne({ type: 'primary', player: request.user._id });
+
+  response.write('PRIMARY BOARD\n');
+  response.write('  1  2  3  4  5  6  7  8  9  10\n');
+  response.write('A ' + primary.board.a.join('  ') + '\n');
+  response.write('B ' + primary.board.b.join('  ') + '\n');
+  response.write('C ' + primary.board.c.join('  ') + '\n');
+  response.write('D ' + primary.board.d.join('  ') + '\n');
+  response.write('E ' + primary.board.e.join('  ') + '\n');
+  response.write('F ' + primary.board.f.join('  ') + '\n');
+  response.write('G ' + primary.board.g.join('  ') + '\n');
+  response.write('H ' + primary.board.h.join('  ') + '\n');
+  response.write('I ' + primary.board.i.join('  ') + '\n');
+  response.write('J ' + primary.board.j.join('  ') + '\n');
+  response.end();  
+});
 
 // This will be creating a route for firing at a ship during gameplay :
 
@@ -25,7 +64,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
 
   let tracking3 = await Board.findOne({ type: 'tracking', player: request.user._id });
   if (tracking3.pastHits.includes(coordinates)){
-    response.write('This shot has already been taken, please shoot somewhere else\n');
+    response.write('This shot has already been taken, please shoot somewhere else\n\n');
   }
   else {
     tracking3.pastHits.push(coordinates);
@@ -47,11 +86,13 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       // If the coordinates match a ships location then it will update as a hit.
 
       if(computerShips[i].location.includes(coordinates)){
-        
+
         let shipHit = computerShips[i].location.indexOf(coordinates);
         computerShips[i].location.splice(shipHit, 1);
         
         if (computerShips[i].location.length === 0){
+          const playerSunkText = userText.playerSunk();
+          response.write(playerSunkText);
           computerShips[i].sunk = true;
           await Ship.findOneAndUpdate({name: computerShips[i].name, player: computer._id }, { sunk: true }, { new: true });
         }
@@ -63,7 +104,9 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
             break;
           }
           if (i === shipArray.length - 1 && shipArray[i].sunk === true) {
-            response.write('YOU WIN!!!\n');
+            const winText = userText.win();
+            response.write(winText);
+            response.end();
           }
         }
         // If there is a hit, it will render an X on the tracking board, if it's a miss then it will render an O.
@@ -72,6 +115,9 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
         
         let tracking1 = await Board.findOne({ type: 'tracking', player: request.user._id });
   
+        const hitText = userText.hit();
+        response.write(hitText);
+
         tracking1.board[row][col] = 'X';
   
         tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id   }, { board: tracking1.board }, { new: true });
@@ -80,6 +126,9 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       } else if (i === computerShips.length - 1) {
         let tracking2 = await Board.findOne({ type: 'tracking', player: request.user._id });
   
+        const missText = userText.miss();
+        response.write(missText);
+
         tracking2.board[row][col] = 'O';
   
         tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id   }, { board: tracking2.board }, { new: true });
@@ -121,6 +170,8 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       userShips[i].location.splice(shipHit, 1);
       
       if (userShips[i].location.length === 0){
+        const computerSunkText = userText.computerSunk();
+        response.write(computerSunkText);
         userShips[i].sunk = true;
         await Ship.findOneAndUpdate({name: userShips[i].name, player: request.user._id }, { sunk: true }, { new: true });
       } 
@@ -132,7 +183,8 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
           break;
         }
         if (i === shipArray.length - 1 && shipArray[i].sunk === true) {
-          response.write('YOU LOST!!!\n');
+          const loseText = userText.lose();
+          response.write(loseText);
           response.end();
         }
       }
@@ -142,6 +194,8 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       
       let primary1 = await Board.findOne({ type: 'primary', player: request.user._id });
 
+      response.write('The computer hit your ship at ' + shotrow.toUpperCase() + (parseInt(shotcol) + 1) + '\n\n');
+
       primary1.board[shotrow][shotcol] = 'X';
 
       tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id   }, { board: primary1.board }, { new: true });
@@ -150,6 +204,8 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
     } else if (i === userShips.length - 1) {
 
       let primary2 = await Board.findOne({ type: 'primary', player: request.user._id });
+
+      response.write('The computer missed your ships at ' + shotrow.toUpperCase() + (parseInt(shotcol) + 1) + '\n\n');
 
       primary2.board[shotrow][shotcol] = 'O';
 
