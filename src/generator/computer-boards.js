@@ -1,46 +1,40 @@
 'use strict';
 
 import Board from '../models/board-model.js';
-import CompUser from './computer-user.js';
 
+// CREATING CLASS TO EXPORT THE TRACKING BOARD AND PRIMARY BOARD ATTACHED TO THE COMPUTER USER
+class Boards{
+  constructor(user) {
+    this.user = user;
+  }
 
-// CREATING THE TRACKING BOARD ATTACHED TO THE COMPUTER USER
-async function createComputerTrackingBoard() {
-  return await Board.create({type: 'tracking', player:  CompUser._id, board: {
-    a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-  }, pastHits: [],
-  });
+  async init() {
+    this.trackingBoard = await Board.create({type: 'tracking', player:  this.user._id, board: {
+      a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    }, pastHits: []});
+    
+    this.primaryBoard = await Board.create({type: 'tracking', player: this.user._id, board: {
+      a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+    }});
+  }
 }
 
-// CREATING THE PRIMARY BOARD ATTACHED TO THE COMPUTER USER
-async function createComputerPrimaryBoard() {
-  return await Board.create({type: 'tracking', player: CompUser._id, board: {
-    a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-  }});
-}
-
-const trackingBoard = createComputerTrackingBoard().then( board => { return board; }).catch(console.error);
-const primaryBoard = createComputerPrimaryBoard().then( board => { return board; }).catch(console.error);
-
-export default {
-  trackingBoard,
-  primaryBoard,
-};
+export default Boards;
