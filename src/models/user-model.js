@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 // FIXME: temporary adjustment hashing for David's Win32 issue
-//import bcrypt from '../middleware/hashing.js';
+import bcrypt from '../middleware/hashing.js';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
@@ -45,8 +45,8 @@ userSchema.statics.authenticateBasic = function (auth) {
 };
 
 userSchema.statics.authenticateToken = function (token) {
-  let parsedToken = jwt.verify(token, process.env.APP_SECRET);
-  // let parsedToken = jwt.verify(token, 'process.env.SECRET');
+  // let parsedToken = jwt.verify(token, process.env.APP_SECRET);
+  let parsedToken = jwt.verify(token, 'TESTPASS');
   let query = { _id: parsedToken.id };
   return this.findOne(query)
     .then(user => {
@@ -66,7 +66,8 @@ userSchema.methods.generateToken = function () {
     capabilities: capabilities[this.role],
   };
 
-  return jwt.sign(tokenData, process.env.APP_SECRET);
+  return jwt.sign(tokenData, 'TESTPASS');
+  // return jwt.sign(tokenData, process.env.APP_SECRET);
 };
 
 const User = mongoose.model('User', userSchema);

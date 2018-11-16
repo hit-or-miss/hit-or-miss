@@ -34,7 +34,7 @@ describe('Test the API', () => {
       await mockRequest.post('/signup')
         .send(newUserInfo);
 
-    expect(response.text).toContain('START:  GET hotormiss.fun/START');
+    expect(response.text).toContain('THE GAME WHERE YOU GET TO LEAD YOUR SHIPS TO VICTORY');
     expect(response.status).toBe(200);
   });
 
@@ -91,7 +91,7 @@ describe('Test the API', () => {
       await mockRequest.post('/signin')
         .set('Authorization', `Bearer ${token}`);
 
-    expect(signInRes.text).toContain('HIT OR MISS');
+    expect(signInRes.text).toContain('GET hitormiss.fun/playhelp');
     expect(signInRes.status).toBe(200);
 
   });

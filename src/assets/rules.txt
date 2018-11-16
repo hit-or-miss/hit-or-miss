@@ -3,7 +3,7 @@
 Hit or miss! is based on the classic game of Battleship and uses 
 standard HTTP METHODS (GET/POST) to play the game.
 
-Codefellows is under attack and your naval armada is the only
+Codefellowia is under attack and your naval armada is the only
 thing standing between success and mid-term project failure.
 
 Your mission: Destroy the advancing enemy naval fleet before 
