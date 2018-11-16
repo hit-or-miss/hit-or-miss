@@ -11,6 +11,7 @@ import supergoose, { startDB, stopDB } from './supergoose.js';
 import User from '../src/models/user-model.js';
 import Board from '../src/models/board-model.js';
 import Ship from '../src/models/ship-model.js';
+import userText from '../src/middleware/user-text.js';
 
 const { app } = require('../src/app.js');
 const mockRequest = supergoose(app);
@@ -155,6 +156,66 @@ describe('Play Route', () => {
       hit = true;
     }
     expect(hit).toBe(true);
+  });
+
+  it('should throw a 404 error if user enters an incorrect url', async() => {
+    const computer = await User.create( {username: 'Computer', password: 'pass',
+    });
+    const response = await mockRequest.get('/pla').auth('Computer', 'pass');
+
+    expect(response.status).toBe(404);
+  });
+
+  it('should throw a 401 error if user enters an incorrect username', async() => {
+    const computer = await User.create( {username: 'Computer', password: 'pass',
+    });
+    const response = await mockRequest.get('/play/b6').auth('User', 'pass');
+
+    expect(response.status).toBe(401);
+  });
+
+  it('should test length and text properties of /play route', async() => {
+    
+    const computer = await User.create( {username: 'Computer', password: 'pass',
+    });
+
+    const shipInfoA = await Ship.create( {name: 'A', size: 5, location:[], player: computer._id,
+    });
+
+
+    const primaryBoardInfo = await Board.create({type: 'primary', player: computer._id, board: {
+      a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+    },
+    });
+    const trackingBoardInfo = await Board.create({type: 'tracking', player: computer._id, board: {
+      a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    },
+    });
+
+    const response = await mockRequest.get('/play').auth('Computer', 'pass');
+    const playHelpText = userText.playHelp();
+
+    expect(response.text).toContain(playHelpText);
+    expect(response.status).toBe(200);
+    expect(response.text.length).toEqual(1154);
   });
 
 });
