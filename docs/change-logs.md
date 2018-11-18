@@ -33,7 +33,7 @@
 * (DC) - Completed tests for middleware (98.11%), models (94.12%), user-route.js (100%).	
 
 #### 11-14-2018	
-* (EP,KC,GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 	
+* (EP,KS,GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 	
 * (RM/DC) - Created initial targeting algorithm for ships.
 * (DC) - Started files and module to render user text information for a basic UX.
 * (GM/KS/RM) - Developed computer shooting functionality.

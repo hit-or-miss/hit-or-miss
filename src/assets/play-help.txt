@@ -1,6 +1,6 @@
 ==========================================
 To shoot the enemy ships:
-  * GET hitormiss.com/play/<action>
+  * GET www.hitormiss.fun/play/<action>
 
 ACTION: <row><column>
 
@@ -11,6 +11,6 @@ Examples:
 The targeting computer will notify you if you HIT or MISS your target.
 
 You may recall these instructions using 
-GET hitormiss.fun/playhelp
+GET www.hitormiss.fun/playhelp
 
 ==========================================

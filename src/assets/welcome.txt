@@ -18,14 +18,14 @@
           ║                                                    ║
           ╚════════════════════════════════════════════════════╝
 
-NEW USER: POST hitormiss.fun/signup username=<username> password=<pass>
+  NEW USER: POST www.hitormiss.fun/signup username=<username> password=<pass>
 
-RULES: GET hitormiss.fun/rules
+  RULES: GET www.hitormiss.fun/rules
 
-START: GET hitormiss.fun/setup
+  START: GET www.hitormiss.fun/setup
 
-GENERAL HELP: GET hitormiss.fun/help
+  GENERAL HELP: GET www.hitormiss.fun/help
 
-SETUP HELP: GET hitormiss.fun/setuphelp
+  SETUP HELP: GET www.hitormiss.fun/setuphelp
 
-PLAY HELP: GET hitormiss.fun/playhelp
+  PLAY HELP: GET www.hitormiss.fun/playhelp
