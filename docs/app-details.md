@@ -1,0 +1,40 @@
+## Documents
+* [change-log.md](./docs/change-log.md) - List of changes made to the project
+* [team-agreement.md](./docs/team-agreement.md) - Team !ASYNC's development agreement
+* [user-stories.md](./docs/user-stories.md) - User stories for the project.
+
+## Architecture
+This project is built on the following technologies:
+* JavaScript
+* Node.js ```https://nodejs.org/en/```
+* MongoDB: 
+* express: ```npm i express```
+* dotenv: ```npm i dotenv```
+
+## Deployment
+* Heroku deployment: TBD
+* Live site: TBD
+
+## Database SCHEMA
+Database Schemas can be found in the following files:
+* board-model.js - used to define tracking and primary player boards.
+* ship-model.js - used to define ships.
+* user-model.js - used to define users.
+
+## File Structure
+```
+TBD 
+
+```
+
+## Credits, Collaborations, and Resources
+
+### Team Organization
+* Image found through Google Images using the ``` labeled for noncommercial reuse with modification ``` filter.
+* [Battleship](http://archive.defense.gov/DODCMSShare/NewsStoryPhoto/2009-08/hrs_090730-N-XXXXX-001c.jpg).
+
+### Consultants
+* Code Fellows: JB Tellez, Allie Grampa, Ashton Ellis
+
+### Resources
+* [ASCII generator](http://patorjk.com/software/taag/#p=display&f=Colossal&t=Hit%20or%20Miss!).
