@@ -27,9 +27,16 @@ THE GAME WHERE YOU GET TO LEAD YOUR SHIPS TO VICTORY!
 To install this package on your local system:
 1. Clone/Fork the repository into your local system
 2. Run ```npm i``` in the directory of the repository to install the required directories.
-3. Local installations will also require a local MongoDB installation.  See [app-details.md](./docs/app-details.md) located in the `docs` folder for more information.
-4. Start your MongoDB server
-5. Run ```npm run start``` to start the game server.
+3. After installing the required dependencies, a `.env` file should be created in the root folder with the following content:
+```
+    PORT=3000
+    APP_SECRET='<secretpassword>'
+    MONGODB_URI=mongodb://localhost:27017/hit-or-miss
+
+```
+4. Local installations will also require a local MongoDB installation.  See [app-details.md](./docs/app-details.md) located in the `docs` folder for more information.
+5. Start your MongoDB server
+6. Run ```npm run start``` to start the game server.
 
 **NOTE:** *The default server address for a local installation is localhost:3000.*
 

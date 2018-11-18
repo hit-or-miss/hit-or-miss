@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
+
+//TODO: Use the following line if the system is compatible with current bcrypt release. See notes in APP-DETAILS.md
 // import bcrypt from 'bcrypt';
-// FIXME: temporary adjustment hashing for David's Win32 issue
+
+// TODO: Comment in the next line to adjust for the bycrypt Win32 issue
 import bcrypt from '../middleware/hashing.js';
+
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
