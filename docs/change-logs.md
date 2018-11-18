@@ -28,12 +28,12 @@
 
 #### 11-13-2018	
 * (DC) - Created docs folder, updated README.md and change-log.md	
-* (EP,GM,KS) - Created [setup-route.js](../src/routes/setup-route.js) and setup routes	
+* (EP/GM/KS) - Created [setup-route.js](../src/routes/setup-route.js) and setup routes	
 * (DC/RM/DC/RM) - Worked through targeting logic and started creating game-route.js	
 * (DC) - Completed tests for middleware (98.11%), models (94.12%), user-route.js (100%).	
 
 #### 11-14-2018	
-* (EP,KS,GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 	
+* (EP/KS/GM) - Handled errors if ships are placed in incorrect locations on setup-route.js 	
 * (RM/DC) - Created initial targeting algorithm for ships.
 * (DC) - Started files and module to render user text information for a basic UX.
 * (GM/KS/RM) - Developed computer shooting functionality.
@@ -43,11 +43,11 @@
 * (GM/KS/RM) - Developed lose state
 
 #### 11-15-2018	
-* (EP) - Completed tests for setup-routes.test.js, coverage = 97%
+* (EP/GM) - Completed tests for setup-routes.test.js, coverage = 97%
 * (DC) - Finished Basic UX and created tests.
 * (RM) - Developed auto-generated Computer user for start of each new game
-* (GM,KS) -  User can no longer place overlapping ships
-* (GM,KS) - Added check to see if all user’s ships have been placed
+* (GM/KS) -  User can no longer place overlapping ships
+* (GM/KS) - Added check to see if all user’s ships have been placed
 
 #### 11-16-2018
 * (DC) - Connected ```www.hitormiss.fun``` to Heroku deployment. 

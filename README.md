@@ -27,11 +27,11 @@ THE GAME WHERE YOU GET TO LEAD YOUR SHIPS TO VICTORY!
 To install this package on your local system:
 1. Clone/Fork the repository into your local system
 2. Run ```npm i``` in the directory of the repository to install the required directories.
-3. Local installations will also require a local MongoDB installation.  See [app-details.md](./docs/app-details.md) located in the `docs` folder for rmore information.
+3. Local installations will also require a local MongoDB installation.  See [app-details.md](./docs/app-details.md) located in the `docs` folder for more information.
 4. Start your MongoDB server
 5. Run ```npm run start``` to start the game server.
 
-**NOTE:** *The default server address for a local installation is LOCALHOST:3000.*
+**NOTE:** *The default server address for a local installation is localhost:3000.*
 
 ### URL Access
 If you do not want to install locally, the game server is also deployed live at `www.hitormiss.fun` and includes the necessary MongoDB server.  **NOTE**: *The examples in the game documentation and help files will use the URL as the server location*.
@@ -43,7 +43,7 @@ If you do not want to install locally, the game server is also deployed live at 
 
 * Postman: `https://www.getpostman.com/` - can use either basic (username:password) or Bearer Authorization (a token is provided at sign up).
 
-### Additional System Information
+### Additional System/Development Information
 Full details about the server and the "behind the scenes" details of ***Hit or Miss!*** can be found in [app-details.md](./docs/app-details.md) located in the `docs` directory.
 
 # Playing The Game
@@ -75,7 +75,7 @@ Type of Ship - Armor
  * (D)estroyer - 2
 
 #### Ship Placement
-**CLI**: `GET hitormiss.fun/setup/<syntax>`
+**CLI**: `GET www.hitormiss.fun/setup/<syntax>`
 
 * Syntax: ship-start-direction
 * SHIP – A, B, C, S, D
