@@ -91,7 +91,7 @@ describe('Test the API', () => {
       await mockRequest.post('/signin')
         .set('Authorization', `Bearer ${token}`);
 
-    expect(signInRes.text).toContain('GET hitormiss.fun/playhelp');
+    expect(signInRes.text).toContain('GET www.hitormiss.fun/playhelp');
     expect(signInRes.status).toBe(200);
 
   });

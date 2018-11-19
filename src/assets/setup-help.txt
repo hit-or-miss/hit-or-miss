@@ -12,7 +12,7 @@ Your armada includes the following ships
 
 Ship Placement 
 -----------------------------------------	
-GET hitormiss.fun/setup/<syntax>
+GET www.hitormiss.fun/setup/<syntax>
 
 Syntax: <ship>-<start>-<direction>	
 SHIP – A, B, C, S, D
@@ -31,6 +31,6 @@ Examples:
 - D-I8-L  -> Place the Destroyer starting at I8 traveling to the left
 
 You may recall these instructions using 
-GET hitormiss.fun/setuphelp
+GET www.hitormiss.fun/setuphelp
 
 =========================================

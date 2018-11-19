@@ -45,7 +45,7 @@ fireRouter.get('/play', auth(), async (request, response) => {
   response.write('H ' + primary.board.h.join('  ') + '\n');
   response.write('I ' + primary.board.i.join('  ') + '\n');
   response.write('J ' + primary.board.j.join('  ') + '\n');
-  response.end();  
+  response.end();
 });
 
 // This will be creating a route for firing at a ship during gameplay :
@@ -63,42 +63,42 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
   // Handling the multiple shots by checking the tracking board for previous hits.
 
   let tracking3 = await Board.findOne({ type: 'tracking', player: request.user._id });
-  if (tracking3.pastHits.includes(coordinates)){
+  if (tracking3.pastHits.includes(coordinates)) {
     response.write('This shot has already been taken, please shoot somewhere else\n\n');
   }
   else {
     tracking3.pastHits.push(coordinates);
-    await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id }, {   pastHits: tracking3.pastHits });
-  
+    await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id }, { pastHits: tracking3.pastHits });
+
     const row = coordinates[0];
     const col = parseInt(coordinates.slice(1)) - 1;
-  
+
     coordinates = row + col; // This fixes an off by one error in the for loop below
-  
+
     // This will find all the Ships associated with the User's _id.
 
-    let computerShips = await Ship.find({ player: computer._id} );
+    let computerShips = await Ship.find({ player: computer._id });
 
     // Checking each ship to see if their coordinates match the firing coordinates :
 
-    for(let i = 0; i < computerShips.length; i++){
+    for (let i = 0; i < computerShips.length; i++) {
 
       // If the coordinates match a ships location then it will update as a hit.
 
-      if(computerShips[i].location.includes(coordinates)){
+      if (computerShips[i].location.includes(coordinates)) {
 
         let shipHit = computerShips[i].location.indexOf(coordinates);
         computerShips[i].location.splice(shipHit, 1);
-        
-        if (computerShips[i].location.length === 0){
+
+        if (computerShips[i].location.length === 0) {
           const playerSunkText = userText.playerSunk();
           response.write(playerSunkText);
           computerShips[i].sunk = true;
-          await Ship.findOneAndUpdate({name: computerShips[i].name, player: computer._id }, { sunk: true }, { new: true });
+          await Ship.findOneAndUpdate({ name: computerShips[i].name, player: computer._id }, { sunk: true }, { new: true });
         }
-        // Checking to see if all of the ships have sunk, if so then you win!!!
 
-        let shipArray = await Ship.find({player: computer._id});
+        // Checking to see if all of the ships have sunk, if so then you win!!!
+        let shipArray = await Ship.find({ player: computer._id });
         for (let i = 0; i < shipArray.length; i++) {
           if (shipArray[i].sunk === false) {
             break;
@@ -110,30 +110,31 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
             return;
           }
         }
+
         // If there is a hit, it will render an X on the tracking board, if it's a miss then it will render an O.
 
-        await Ship.findByIdAndUpdate(computerShips[i]._id, computerShips[i], {new:true});
-        
+        await Ship.findByIdAndUpdate(computerShips[i]._id, computerShips[i], { new: true });
+
         let tracking1 = await Board.findOne({ type: 'tracking', player: request.user._id });
-  
+
         const hitText = userText.hit();
         response.write(hitText);
 
         tracking1.board[row][col] = 'X';
-  
-        tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id   }, { board: tracking1.board }, { new: true });
-  
+
+        tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id }, { board: tracking1.board }, { new: true });
+
         break;
       } else if (i === computerShips.length - 1) {
         let tracking2 = await Board.findOne({ type: 'tracking', player: request.user._id });
-  
+
         const missText = userText.miss();
         response.write(missText);
 
         tracking2.board[row][col] = 'O';
-  
-        tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id   }, { board: tracking2.board }, { new: true });
-  
+
+        tracker = await Board.findOneAndUpdate({ type: 'tracking', player: request.user._id }, { board: tracking2.board }, { new: true });
+
         break;
       }
     }
@@ -161,24 +162,24 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
   let shotrow = array[random1];
   let shotcol = random2.toString();
   let shot = shotrow + shotcol;
-  
-  let userShips = await Ship.find({ player: request.user._id} );
 
-  for(let i = 0; i < userShips.length; i++){
-    if(userShips[i].location.includes(shot)){
-      
+  let userShips = await Ship.find({ player: request.user._id });
+
+  for (let i = 0; i < userShips.length; i++) {
+    if (userShips[i].location.includes(shot)) {
+
       let shipHit = userShips[i].location.indexOf(shot);
       userShips[i].location.splice(shipHit, 1);
-      
-      if (userShips[i].location.length === 0){
+
+      if (userShips[i].location.length === 0) {
         const computerSunkText = userText.computerSunk();
         response.write(computerSunkText);
         userShips[i].sunk = true;
-        await Ship.findOneAndUpdate({name: userShips[i].name, player: request.user._id }, { sunk: true }, { new: true });
-      } 
+        await Ship.findOneAndUpdate({ name: userShips[i].name, player: request.user._id }, { sunk: true }, { new: true });
+      }
       // If all of the user's ships sink then they lose!!!
 
-      let shipArray = await Ship.find({player: request.user._id});
+      let shipArray = await Ship.find({ player: request.user._id });
       for (let i = 0; i < shipArray.length; i++) {
         if (shipArray[i].sunk === false) {
           break;
@@ -192,15 +193,15 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
       }
       // If there is a hit, it will render an X on the primary board, if it's a miss then it will render an O.
 
-      await Ship.findByIdAndUpdate(userShips[i]._id, userShips[i], {new:true});
-      
+      await Ship.findByIdAndUpdate(userShips[i]._id, userShips[i], { new: true });
+
       let primary1 = await Board.findOne({ type: 'primary', player: request.user._id });
 
       response.write('The computer hit your ship at ' + shotrow.toUpperCase() + (parseInt(shotcol) + 1) + '\n\n');
 
       primary1.board[shotrow][shotcol] = 'X';
 
-      tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id   }, { board: primary1.board }, { new: true });
+      tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id }, { board: primary1.board }, { new: true });
 
       break;
     } else if (i === userShips.length - 1) {
@@ -211,7 +212,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
 
       primary2.board[shotrow][shotcol] = 'O';
 
-      tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id   }, { board: primary2.board }, { new: true });
+      tracker = await Board.findOneAndUpdate({ type: 'primary', player: request.user._id }, { board: primary2.board }, { new: true });
 
       break;
     }
@@ -232,7 +233,7 @@ fireRouter.get('/play/:fire', auth(), async (request, response, next) => {
   response.write('H ' + primary.board.h.join('  ') + '\n');
   response.write('I ' + primary.board.i.join('  ') + '\n');
   response.write('J ' + primary.board.j.join('  ') + '\n');
-  response.end();  
+  response.end();
 });
 
 export default fireRouter;

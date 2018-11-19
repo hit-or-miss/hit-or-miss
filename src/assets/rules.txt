@@ -13,10 +13,10 @@ Hit or Miss is a turn based game alternating between you and
 your opponent. Because of your superior experience, you will
 start the game by placing the ships in your armada around your 
 PRIMARY playing board. Instructions for placing your ships can 
-be found at: GET hitormiss.fun/setuphelp.
+be found at: GET www.hitormiss.fun/setuphelp.
 
 You will attack the enemy by shooting your missiles at their ships.
 Targeting instructions can be found at:
-GET hitormiss.fun/playhelp.
+GET www.hitormiss.fun/playhelp.
 
 ================================================================
