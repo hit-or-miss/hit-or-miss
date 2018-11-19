@@ -12,13 +12,13 @@ import error from '../middleware/404.js';
 // Importing a way to create a Computer user and all ships and boards asscoiated with said user
 import createComputerUser from '../generator/computer-user.js';
 import Fleet from '../generator/computer-fleet.js';
-import Boards from'../generator/computer-boards.js';
+import Boards from '../generator/computer-boards.js';
 import userText from '../middleware/user-text.js';
 
 // Clearing our tracking board and the array with the previous hits whenever the "/setup" path is used.
 
 setupRouter.get('/setup', auth(), async (req, res) => {
-  
+
   const setupHelpText = userText.setupHelp();
   res.write(setupHelpText);
 
@@ -34,18 +34,19 @@ setupRouter.get('/setup', auth(), async (req, res) => {
   await boards.init();
 
 
-  await Board.findOneAndUpdate({ type: 'tracking', player: req.user._id}, { board: {
-    a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-  }, pastHits: [],
+  await Board.findOneAndUpdate({ type: 'tracking', player: req.user._id }, {
+    board: {
+      a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    }, pastHits: [],
   });
 
   // Checking if the player already has a primary board.
@@ -79,35 +80,38 @@ setupRouter.get('/setup', auth(), async (req, res) => {
     await Ship.create({ name: 'C', size: 3, player: req.user._id });
     await Ship.create({ name: 'S', size: 3, player: req.user._id });
     await Ship.create({ name: 'D', size: 2, player: req.user._id });
-    
-    await Board.create({type: 'tracking', player: req.user._id, board: {
-      a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-      j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    }, pastHits: [],
+
+    await Board.create({
+      type: 'tracking', player: req.user._id, board: {
+        a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        c: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        d: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        e: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        f: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        g: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        h: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        i: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        j: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+      }, pastHits: [],
     });
 
     // This prints the primary board to the user.
 
-    let print = await Board.create({type: 'primary', player: req.user._id, board: {
-      a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    }});
+    let print = await Board.create({
+      type: 'primary', player: req.user._id, board: {
+        a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      },
+    });
     res.write('\n');
     res.write('PRIMARY BOARD\n');
     res.write('  1  2  3  4  5  6  7  8  9  10\n');
@@ -162,7 +166,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
       for (let i = startNum; i < startNum + size; i++) {
         ship.location.push(row + i);
       }
-      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id });
       let overlapping = false;
       for (let i = 0; i < alreadyPlacedShips.length; i++) {
         if (alreadyPlacedShips[i].name !== placeArray[0]) {
@@ -173,7 +177,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
             }
           }
         }
-      }  
+      }
       if (overlapping === false) {
         await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
       }
@@ -193,7 +197,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
       for (let i = startNum - size + 1; i <= startNum; i++) {
         ship.location.push(row + i);
       }
-      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id });
       let overlapping = false;
       for (let i = 0; i < alreadyPlacedShips.length; i++) {
         if (alreadyPlacedShips[i].name !== placeArray[0]) {
@@ -204,7 +208,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
             }
           }
         }
-      }  
+      }
       if (overlapping === false) {
         await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
       }
@@ -226,7 +230,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
       for (let i = startIndex; i < startIndex + size; i++) {
         ship.location.push(rowArray[i] + num);
       }
-      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id });
       let overlapping = false;
       for (let i = 0; i < alreadyPlacedShips.length; i++) {
         if (alreadyPlacedShips[i].name !== placeArray[0]) {
@@ -237,7 +241,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
             }
           }
         }
-      }  
+      }
       if (overlapping === false) {
         await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
       }
@@ -259,7 +263,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
       for (let i = startIndex - size + 1; i <= startIndex; i++) {
         ship.location.push(rowArray[i] + num);
       }
-      let alreadyPlacedShips = await Ship.find({ player: req.user._id } );
+      let alreadyPlacedShips = await Ship.find({ player: req.user._id });
       let overlapping = false;
       for (let i = 0; i < alreadyPlacedShips.length; i++) {
         if (alreadyPlacedShips[i].name !== placeArray[0]) {
@@ -270,7 +274,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
             }
           }
         }
-      }  
+      }
       if (overlapping === false) {
         await Ship.findOneAndUpdate({ name: placeArray[0], player: req.user._id }, { location: ship.location }, { new: true });
       }
@@ -279,19 +283,21 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
 
   // This will clear the primary board before placing the ships the user has just chosen.
 
-  let primary = await Board.findOneAndUpdate({type:'primary', player:req.user._id},
-    { board: {
-      a: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      b: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      c: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      d: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      e: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      f: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      g: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      h: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      i: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      j: [ '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-    } }, { new: true });
+  let primary = await Board.findOneAndUpdate({ type: 'primary', player: req.user._id },
+    {
+      board: {
+        a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        c: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        d: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        e: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        f: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        g: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+        j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
+      },
+    }, { new: true });
 
   // Now begins the placing of the user's ships on the cleared out primary board before gameplay :
 
@@ -382,7 +388,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
     else if (i === shipCheck.length - 1) {
       res.write('\n');
       res.write('You are ready to play!\n');
-      res.write('START:  GET hitormiss.fun/play');
+      res.write('START:  GET www.hitormiss.fun/play');
     }
   }
   res.end();

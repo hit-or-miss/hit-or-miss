@@ -2,7 +2,6 @@
 
 // Custom Error Handler because we always want to return a JSON response
 export default (err, req, res, next) => {
-  console.log(err);
   let error = {
     error: (typeof err === 'object' && err.statusMessage) || err,
   };

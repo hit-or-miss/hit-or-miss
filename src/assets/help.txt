@@ -10,19 +10,19 @@ or POSTMAN found at https://www.getpostman.com/.  Other similar
 options exist, but have not been tested.
 
 SAMPLE HTTPie request:  
-  * HTTP -a username:password GET hitormiss.fun/rules
+  * HTTP -a username:password GET www.hitormiss.fun/rules
 
 Basic authentication with a <username> and <password> is needed 
 to play.
 
-Create NEW User: POST hitormiss.fun/signup
+Create NEW User: POST www.hitormiss.fun/signup
 
 RETURNING Users should use the same username and password 
           as when they signed up.
 
-RULES: GET hitormiss.fun/rules
+RULES: GET www.hitormiss.fun/rules
 
-START a Game:  GET hitormiss.fun/setup
+START a Game:  GET www.hitormiss.fun/setup
 
 ==============================================================
 
