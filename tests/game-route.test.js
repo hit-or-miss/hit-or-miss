@@ -39,7 +39,7 @@ describe('Play Route', () => {
       name: 'A', size: 5, location: ['d7'], player: computer._id,
     });
 
-    const primaryBoardInfo = await Board.create({
+    await Board.create({
       type: 'primary', player: computer._id, board: {
         a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
@@ -53,7 +53,8 @@ describe('Play Route', () => {
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       },
     });
-    const trackingBoardInfo = await Board.create({
+
+    await Board.create({
       type: 'tracking', player: computer._id, board: {
         a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
         b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -80,11 +81,11 @@ describe('Play Route', () => {
       username: 'Computer', password: 'pass',
     });
 
-    const shipInfoA = await Ship.create({
+    await Ship.create({
       name: 'A', size: 5, location: [], player: user._id,
     });
 
-    const primaryBoardInfo = await Board.create({
+    await Board.create({
       type: 'primary', player: user._id, board: {
         a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
@@ -98,6 +99,7 @@ describe('Play Route', () => {
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       },
     });
+
     const trackingBoardInfo = await Board.create({
       type: 'tracking', player: user._id, board: {
         a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -126,7 +128,7 @@ describe('Play Route', () => {
       username: 'Computer', password: 'pass',
     });
 
-    const shipInfoA = await Ship.create({
+    await Ship.create({
       name: 'A', size: 5, location: [], player: user._id,
     });
 
@@ -144,7 +146,8 @@ describe('Play Route', () => {
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       },
     });
-    const trackingBoardInfo = await Board.create({
+
+    await Board.create({
       type: 'tracking', player: user._id, board: {
         a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
         b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -171,7 +174,7 @@ describe('Play Route', () => {
   });
 
   it('should throw a 404 error if user enters an incorrect url', async () => {
-    const computer = await User.create({
+    await User.create({
       username: 'Computer', password: 'pass',
     });
     const response = await mockRequest.get('/pla').auth('Computer', 'pass');
@@ -180,7 +183,7 @@ describe('Play Route', () => {
   });
 
   it('should throw a 401 error if user enters an incorrect username', async () => {
-    const computer = await User.create({
+    await User.create({
       username: 'Computer', password: 'pass',
     });
     const response = await mockRequest.get('/play/b6').auth('User', 'pass');
@@ -194,12 +197,12 @@ describe('Play Route', () => {
       username: 'Computer', password: 'pass',
     });
 
-    const shipInfoA = await Ship.create({
+    await Ship.create({
       name: 'A', size: 5, location: [], player: computer._id,
     });
 
 
-    const primaryBoardInfo = await Board.create({
+    await Board.create({
       type: 'primary', player: computer._id, board: {
         a: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         b: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
@@ -213,7 +216,8 @@ describe('Play Route', () => {
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
       },
     });
-    const trackingBoardInfo = await Board.create({
+
+    await Board.create({
       type: 'tracking', player: computer._id, board: {
         a: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
         b: ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -235,6 +239,7 @@ describe('Play Route', () => {
     expect(response.status).toBe(200);
     expect(response.text.length).toEqual(1162);
   });
+
 
 });
 

@@ -110,7 +110,7 @@ setupRouter.get('/setup', auth(), async (req, res) => {
         h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      }
+      },
     });
     res.write('\n');
     res.write('PRIMARY BOARD\n');
@@ -296,7 +296,7 @@ setupRouter.get('/setup/:place', auth(), async (req, res) => { //B-B6-R
         h: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         i: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
         j: ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
-      }
+      },
     }, { new: true });
 
   // Now begins the placing of the user's ships on the cleared out primary board before gameplay :

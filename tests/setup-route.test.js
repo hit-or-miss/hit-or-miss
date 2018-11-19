@@ -139,22 +139,22 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: ['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: ['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
@@ -167,22 +167,22 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: ['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: ['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
@@ -195,22 +195,22 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: ['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: ['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
@@ -223,22 +223,22 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: ['d1', 'd2', 'd3', 'd4', 'd6'], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: ['d3', 'd4', 'd5', 'd6'], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: ['d3', 'd4', 'd5', 'd6', 'd7'], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
@@ -255,23 +255,24 @@ describe('Setup Routes', () => {
       const shipInfoA = await Ship.create({
         name: 'A', size: 5, location: [], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: [], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: [], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: [], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: [], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
-      const placeShip = await mockRequest.get('/setup/A-J1-R').auth('foo', 'bar');
+      await mockRequest.get('/setup/A-J1-R').auth('foo', 'bar');
+
       const updatedShip = await Ship.findById(shipInfoA._id);
       expect(updatedShip.location[3]).toBe('j3');
     });
@@ -281,26 +282,26 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: [], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: [], player: userInfo._id,
       });
       const shipInfoC = await Ship.create({
         name: 'C', size: 3, location: [], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: [], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: [], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
-      const placeShip = await mockRequest.get('/setup/C-B8-L').auth('foo', 'bar');
+      await mockRequest.get('/setup/C-B8-L').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoC._id);
       expect(updatedShip.location[1]).toBe('b6');
     });
@@ -310,26 +311,26 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: [], player: userInfo._id,
       });
       const shipInfoB = await Ship.create({
         name: 'B', size: 4, location: [], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: [], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: [], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: [], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
-      const placeShip = await mockRequest.get('/setup/B-J8-U').auth('foo', 'bar');
+      await mockRequest.get('/setup/B-J8-U').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoB._id);
       expect(updatedShip.location[1]).toBe('h7');
     });
@@ -339,26 +340,26 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: [], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: [], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: [], player: userInfo._id,
       });
       const shipInfoD = await Ship.create({
         name: 'D', size: 2, location: [], player: userInfo._id,
       });
-      const shipInfoS = await Ship.create({
+      await Ship.create({
         name: 'S', size: 1, location: [], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
-      const placeShip = await mockRequest.get('/setup/D-C1-D').auth('foo', 'bar');
+      await mockRequest.get('/setup/D-C1-D').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoD._id);
       expect(updatedShip.location[1]).toBe('d0');
     });
@@ -368,26 +369,26 @@ describe('Setup Routes', () => {
       const userInfo = await User.create({
         username: 'foo', password: 'bar',
       });
-      const shipInfoA = await Ship.create({
+      await Ship.create({
         name: 'A', size: 5, location: [], player: userInfo._id,
       });
-      const shipInfoB = await Ship.create({
+      await Ship.create({
         name: 'B', size: 4, location: [], player: userInfo._id,
       });
-      const shipInfoC = await Ship.create({
+      await Ship.create({
         name: 'C', size: 3, location: [], player: userInfo._id,
       });
-      const shipInfoD = await Ship.create({
+      await Ship.create({
         name: 'D', size: 2, location: [], player: userInfo._id,
       });
       const shipInfoS = await Ship.create({
         name: 'S', size: 1, location: [], player: userInfo._id,
       });
-      const boardInfo = await Board.create({
+      await Board.create({
         type: 'primary', player: userInfo._id,
       });
 
-      const placeShip = await mockRequest.get('/setup/S-C1-D').auth('foo', 'bar');
+      await mockRequest.get('/setup/S-C1-D').auth('foo', 'bar');
       const updatedShip = await Ship.findById(shipInfoS._id);
       expect(updatedShip.location[0]).toBe('c0');
     });
